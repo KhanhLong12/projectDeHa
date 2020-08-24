@@ -4,8 +4,11 @@ namespace App\Http\Controllers\backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Response;
 use App\Model\Category;
+use Illuminate\Support\Facades\DB;
+use Validator;
+use App\Http\Requests\StoreCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -14,9 +17,21 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    protected $category;
+    public function __construct(Category $category){
+
+        $this->category = $category;
+    }
+
     public function index()
     {
-        $getAllCategory = Category::all();
+        $items           = $this->category->listItems('get_all_items');
+        $parent_category = $this->category->listItems('get_parent_name');
+        return view('backend.page.category.index')->with([
+            'items'           => $items,
+            'parent_category' => $parent_category
+        ]);
     }
 
     /**
@@ -35,9 +50,12 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        //
+            $category = $this->category->store($request->all());
+            return response()->json([
+                'category'  => $category,
+            ], 200);
     }
 
     /**
@@ -84,4 +102,10 @@ class CategoryController extends Controller
     {
         //
     }
+
+    public function list(Request $request)
+    {
+        $items = $this->category->all();
+        return view('backend.page.category.list',compact('items'));
+    } 
 }
