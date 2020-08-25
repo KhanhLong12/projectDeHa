@@ -30,4 +30,5 @@ class Category extends Model
         $result = Category::create($attribute);
         return $result;
     }
+    
 }

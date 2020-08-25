@@ -9,6 +9,7 @@ use App\Model\Category;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\EditCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -77,7 +78,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Category::findOrFail($id);
+        return response()->json(['data' => $data]);
     }
 
     /**
@@ -87,9 +89,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditCategoryRequest $request, $id)
     {
-        //
+        $category  = Category::findOrFail($id)->update($request->all());
+            return response()->json([
+                'category'  => $category,
+            ], 200);
+
     }
 
     /**
@@ -105,7 +111,8 @@ class CategoryController extends Controller
 
     public function list(Request $request)
     {
-        $items = $this->category->all();
-        return view('backend.page.category.list',compact('items'));
+        $items           = $this->category->all();
+        $parent_category = $this->category->listItems('get_parent_name');
+        return view('backend.page.category.list',compact('items','parent_category'));
     } 
 }

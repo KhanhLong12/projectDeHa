@@ -18,11 +18,12 @@
 				<td>{{ $value['parent_category'] }}</td>
 				<td>{{ $value['display'] }}</td>
 				<td>
-					<a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+					<a href="{{route('category.edit',$value['id'])}}" class="edit btnEdit" data-toggle="modal" data-target="#editCategory" data-update="{{route('category.update',$value['id'])}}"><i class="material-icons">&#xE254;</i></a>
 					<a href="#" class="delete" data-toggle="modal" data-target="#exampleModalCenter-{{$value['id']}}" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
 				</td>
 			</tr> 
 			@endforeach
+			@include('backend.page.category.edit')
 		</tbody>
 	</table>
 	@else
