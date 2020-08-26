@@ -1,13 +1,7 @@
 
  const POST_METHOD = 'POST';
- const DELETE_METHOD = 'DELETE';
 //add item
 $(document).ready(function(){
-
-    $(document).on('click', '.AddNewCategory', function(){
-        $('#addCategory').modal('show');
-    });
-
 
     $.ajaxSetup({
         headers: {
@@ -20,7 +14,7 @@ $(document).ready(function(){
         let formData       = $('#createFormID');
         let data           = formData.serialize();
 
-        let url = formData.attr('action');
+        let url            = formData.attr('action');
         
       callCategoryApi(url, data,POST_METHOD)     //goi ajax den CategoryController func store
         .then((res)=>{                           // res: category new 
@@ -63,7 +57,7 @@ $(document).ready(function(){
 
     // -------edit category----------
     // get record
-    $('.btnEdit').on('click',function(){
+    $(document).on('click', '.btnEdit', function(){
         var url = $(this).attr('href');
         var urlUpdate = $(this).attr('data-update');
         callCategoryApi(url, null,null)
@@ -98,7 +92,7 @@ $(document).ready(function(){
 
 
     // ------delete record----------
-    $('.btnDelete').on('click', function(){
+    $(document).on('click', '.btnDelete', function(){
         var url = $(this).attr('href');
         $('#formDelete').attr('action', function(i, value) {
             return url;
@@ -113,7 +107,6 @@ $(document).ready(function(){
             getList(urlList)
             toastr.success('Xoa danh muc thanh cong');
             $('#deleteForm').modal('hide');
-            // location.reload();
         })
 
     });
