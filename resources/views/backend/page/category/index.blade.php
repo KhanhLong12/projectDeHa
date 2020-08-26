@@ -53,5 +53,5 @@
 <script type="text/javascript">
 	let urlList = "{{route('category.list')}}";
 </script>
-<script src="{{ asset('backend/category/category_create.js') }}"></script>
+<script src="{{ asset('backend/category/category.js') }}"></script>
 @endpush

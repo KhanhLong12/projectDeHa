@@ -18,15 +18,7 @@ $(document).ready(function(){
    $(document).on('click', '#create-new-category', function(){
       
         let formData       = $('#createFormID');
-        var _token         = $("input[name='_token']").val();
-        var name           = $('#name').val();
-        var select_parent  = $( "#parent_category option:selected" ).text();
-        var select_display = $( "#display option:selected" ).text();
-        let data = {_token          :_token,
-                    name            : name,
-                    parent_category : select_parent,
-                    display         : select_display
-                    };
+        let data           = formData.serialize();
 
         let url = formData.attr('action');
         
@@ -74,23 +66,19 @@ $(document).ready(function(){
     $('.btnEdit').on('click',function(){
         var url = $(this).attr('href');
         var urlUpdate = $(this).attr('data-update');
-        $.ajax({
-            url:url,
-            dataType:"json",
-            success:function(html){
-                $('#ftname').val(html.data.name);
-                $('#ftparent_category').val(html.data.parent_category);
-                $('#ftdisplay').val(html.data.display);
-                $('#editFormID').attr('action', function(i, value) {
-                    return urlUpdate;
-                });
-            }
-            
-        });
+        callCategoryApi(url, null,null)
+        .then((res)=>{
+            $('.ftname').val(res.data.name);
+            $('.ftparent_category').val(res.data.parent_category);
+            $('.ftdisplay').val(res.data.display);
+            $('#editFormID').attr('action', function(i, value) {
+                return urlUpdate;
+            });
+        })
     });
 
     // update record
-    $(document).on('click', '#edit-new-category', function(){
+    $(document).on('click', '.edit-new-category', function(){
         let formData       = $('#editFormID');
         var url            = formData.attr('action');
         let data           = formData.serialize();

@@ -21,9 +21,9 @@
 					<div class="form-group">
 						<label>Danh muc</label>
 						<select class="custom-select" id="parent_category" name="parent_category">
-							<option value="0">danh muc cha</option>
+							<option value="danh muc cha">danh muc cha</option>
 							@foreach($parent_category as $item)
-								<option value="{{ $item->id }}">{{ $item->name }}</option>
+								<option value="{{ $item->name }}">{{ $item->name }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -32,8 +32,8 @@
 						<label for="exampleInputStatus">Hien thi</label>
 						<select class="custom-select" id="display" name="display">
 							<option selected>---Chon hien thi---</option>
-							<option value="1">co</option>
-							<option value="2">khong</option>
+							<option value="co">co</option>
+							<option value="khong">khong</option>
 						</select>
 					</div>
 

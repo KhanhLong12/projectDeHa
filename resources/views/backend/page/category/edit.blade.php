@@ -15,12 +15,12 @@
 					@csrf
 					<div class="form-group">
 						<label for="exampleInputName"></label>
-						<input type="text" name="name" class="form-control" id="ftname" placeholder="Nhap ten danh muc">
+						<input type="text" name="name" class="form-control ftname" placeholder="Nhap ten danh muc">
 					</div>
 
 					<div class="form-group">
 						<label>Danh muc</label>
-						<select class="custom-select" id="ftparent_category" name="parent_category">
+						<select class="custom-select ftparent_category" name="parent_category">
 							<option value="danh muc cha">danh muc cha</option>
 							@foreach($parent_category as $item)
 								<option value="{{ $item->name }}">{{ $item->name }}</option>
@@ -30,7 +30,7 @@
 
 					<div class="form-group">
 						<label for="exampleInputStatus">Hien thi</label>
-						<select class="custom-select" id="ftdisplay" name="display">
+						<select class="custom-select ftdisplay" name="display">
 							<option selected>---Chon hien thi---</option>
 							<option value="co">co</option>
 							<option value="khong">khong</option>
@@ -39,7 +39,7 @@
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">huy</button>
-						<button type="button" id="edit-new-category" class="btn btn-primary">them moi</button>
+						<button type="button" class="btn btn-primary edit-new-category">them moi</button>
 					</div>
 				</form>
 			</div>
