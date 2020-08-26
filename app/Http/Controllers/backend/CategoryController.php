@@ -106,7 +106,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id)->delete();
+        return response()->json([
+                'category'  => $category,
+            ], 200);
     }
 
     public function list(Request $request)

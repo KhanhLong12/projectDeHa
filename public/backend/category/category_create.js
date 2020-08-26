@@ -1,5 +1,6 @@
 
  const POST_METHOD = 'POST';
+ const DELETE_METHOD = 'DELETE';
 //add item
 $(document).ready(function(){
 
@@ -106,6 +107,29 @@ $(document).ready(function(){
             }
         })
     });
+
+
+    // ------delete record----------
+    $('.btnDelete').on('click', function(){
+        var url = $(this).attr('href');
+        $('#formDelete').attr('action', function(i, value) {
+            return url;
+        });
+    });
+
+    $(document).on('click', '#delete-category', function(){
+        let formData       = $('#formDelete');
+        var url            = formData.attr('action');
+        callCategoryApi(url, null,POST_METHOD)
+        .then((res)=>{
+            getList(urlList)
+            toastr.success('Xoa danh muc thanh cong');
+            $('#deleteForm').modal('hide');
+            // location.reload();
+        })
+
+    });
+
 
 });
 

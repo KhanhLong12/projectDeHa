@@ -16,6 +16,9 @@
 
 	<!-- edit category -->
 	@include('backend.page.category.edit')
+
+	<!-- delete category -->
+	@include('backend.page.category.delete')
 	<div class="table-responsive">
 		<div class="table-wrapper">			
 			<div class="table-title">
@@ -51,5 +54,4 @@
 	let urlList = "{{route('category.list')}}";
 </script>
 <script src="{{ asset('backend/category/category_create.js') }}"></script>
-<script src="{{ asset('backend/category/category_edit.js') }}"></script>
 @endpush
