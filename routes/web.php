@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('backend.dashboard.dashboard');
-});
+// Route::get('/', function () {
+//     return view('backend.dashboard.dashboard');
+// });
 
 Route::prefix('/category')->namespace('backend')->group(function(){
 	Route::get('/index','CategoryController@index')->name('category.index');
@@ -23,3 +23,7 @@ Route::prefix('/category')->namespace('backend')->group(function(){
 	Route::post('/update/{id}','CategoryController@update')->name('category.update');
 	Route::post('/delete/{id}','CategoryController@destroy')->name('category.delete');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('dashboard');
