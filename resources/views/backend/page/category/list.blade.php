@@ -19,7 +19,7 @@
 				<td>{{ $value['display'] }}</td>
 				<td>
 					<a href="{{route('category.edit',$value['id'])}}" class="edit btnEdit" data-toggle="modal" data-target="#editCategory" data-update="{{route('category.update',$value['id'])}}"><i class="material-icons">&#xE254;</i></a>
-					<a href="#" class="delete" data-toggle="modal" data-target="#exampleModalCenter-{{$value['id']}}" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+					<a href="{{route('category.delete',$value['id'])}}" class="delete btnDelete" data-toggle="modal" data-target="#deleteForm"><i class="material-icons">&#xE872;</i></a>
 				</td>
 			</tr> 
 			@endforeach

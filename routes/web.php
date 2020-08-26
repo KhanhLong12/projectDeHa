@@ -21,4 +21,5 @@ Route::prefix('/category')->namespace('backend')->group(function(){
 	Route::get('/list','CategoryController@list')->name('category.list');
 	Route::get('/edit/{id}','CategoryController@edit')->name('category.edit');
 	Route::post('/update/{id}','CategoryController@update')->name('category.update');
+	Route::post('/delete/{id}','CategoryController@destroy')->name('category.delete');
 });
