@@ -10,6 +10,11 @@
     </div>
 </form>
 <!-- Navbar-->
+    @if (session()->has('flash_notification.success')) 
+    <div class="alert alert-success" id="alertLogin" style="margin-bottom:0px !important">
+        {!! session('flash_notification.success') !!}
+    </div>
+    @endif
 <ul class="navbar-nav ml-auto ml-md-0">
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>

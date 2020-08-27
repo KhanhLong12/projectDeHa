@@ -41,6 +41,9 @@
 					<span class="login100-form-title p-b-34 p-t-27">
 						Log in
 					</span>
+					@if($errors->any())
+						<div class="alert alert-danger" style="color: red; text-align: center;">sai tên đăng nhập hoặc mật khẩu</div>
+					@endif
 
 					<div class="wrap-input100 validate-input" data-validate = "Enter username">
 						<input class="input100" id="email" type="email" name="email" placeholder="Username">

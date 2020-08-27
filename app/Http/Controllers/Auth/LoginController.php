@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -40,5 +42,11 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('backend.auth.login');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        $request->session()->flash('flash_notification.success', 'Xin chao '.Auth::user()->name);
+        return redirect()->intended($this->redirectPath());
     }
 }
