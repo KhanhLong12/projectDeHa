@@ -25,7 +25,7 @@
             </a>
             <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                    <a class="nav-link collapsed" href="post.html" >
+                    <a class="nav-link collapsed" href="{{route('post.index')}}" >
                         bai viet
                     </a>
             </div>
