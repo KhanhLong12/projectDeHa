@@ -36,5 +36,15 @@
     <script src="{{ asset('backend/js/scripts.js') }}"></script>
     <script src="{{ asset('backend/js/toastr.js') }}"></script>
     @stack('js')
+    <script type='text/javascript'> 
+      setTimeout(
+         function(){
+
+            $('#alertLogin').hide();
+
+        },
+        2000
+        );
+    </script>
 </body>
 </html>
