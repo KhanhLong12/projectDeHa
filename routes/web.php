@@ -24,6 +24,15 @@ Route::prefix('/category')->namespace('backend')->group(function(){
 	Route::post('/delete/{id}','CategoryController@destroy')->name('category.delete');
 });
 
+Route::prefix('/post')->namespace('backend')->group(function(){
+	Route::get('/index','PostController@index')->name('post.index');
+	// Route::post('/store','CategoryController@store')->name('category.store');
+	// Route::get('/list','CategoryController@list')->name('category.list');
+	// Route::get('/edit/{id}','CategoryController@edit')->name('category.edit');
+	// Route::post('/update/{id}','CategoryController@update')->name('category.update');
+	// Route::post('/delete/{id}','CategoryController@destroy')->name('category.delete');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('dashboard');

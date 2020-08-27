@@ -12,7 +12,7 @@ class Category extends Model
 
     public function posts()
     {
-    	return $this->hasMany('App\Model\Posts','auther_id');
+    	return $this->hasMany('App\Model\Post','category_id');
     }
 
 
