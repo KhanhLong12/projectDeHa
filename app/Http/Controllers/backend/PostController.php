@@ -5,6 +5,8 @@ namespace App\Http\Controllers\backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Post;
+use App\Model\Category;
+use App\Model\Author;
 
 class PostController extends Controller
 {
@@ -14,18 +16,38 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected $post;
-    public function __construct(Post $post){
-
+    protected $category;
+    public function __construct(Post $post, Category $category){
         $this->post = $post;
+        $this->category = $category;
     }
 
     public function index()
     {
-        $items = $this->post->listItems('get_all_items');
+        $items      = $this->post->listItems('get_all_items');
+
+        $categories = $this->category->listItems('get_all_items');
+
+        $authors    = Author::all();
 
         return view('backend.page.post.index')->with([
-            'items' => $items,
+            'items'      => $items,
+            'categories' => $categories,
+            'authors'    => $authors,
         ]);
+        
+    }
+
+    public function list(Request $request)
+    {
+        $items      = $this->post->listItems('get_all_items');
+
+        $categories = $this->category->listItems('get_all_items');
+
+        $authors    = Author::all();
+
+        
+        return view('backend.page.post.list',compact('items', 'categories', 'authors'));
     }
 
     /**
@@ -46,7 +68,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = $this->post->store($request->all());
+        return response()->json([
+                'post'  => $post,
+            ], 200);
     }
 
     /**

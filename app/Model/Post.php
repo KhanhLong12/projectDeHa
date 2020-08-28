@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $table = 'posts';
-    protected $fillable = ['name', 'category_id', 'description', 'content', 'status'];
+    protected $fillable = ['name', 'category_id', 'author_id', 'description', 'content', 'status'];
 
     public function category()
     {
@@ -30,5 +30,10 @@ class Post extends Model
         }
             
     	return $result;
+    }
+
+    public function store($attribute){
+        $result = Post::create($attribute);
+        return $result;
     }
 }
