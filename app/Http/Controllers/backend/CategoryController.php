@@ -117,5 +117,14 @@ class CategoryController extends Controller
         $items           = $this->category->all();
         $parent_category = $this->category->listItems('get_parent_name');
         return view('backend.page.category.list',compact('items','parent_category'));
-    } 
+    }
+
+
+    public function fcsearch(Request $request)
+    {
+
+        $items           = $this->category->search($request->input('search'));
+        $parent_category = $this->category->listItems('get_parent_name');
+        return view('backend.page.category.list',compact('items','parent_category'));
+    }
 }

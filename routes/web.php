@@ -22,6 +22,7 @@ Route::prefix('/category')->namespace('backend')->group(function(){
 	Route::get('/edit/{id}','CategoryController@edit')->name('category.edit');
 	Route::post('/update/{id}','CategoryController@update')->name('category.update');
 	Route::post('/delete/{id}','CategoryController@destroy')->name('category.delete');
+	Route::get('/search', 'CategoryController@fcsearch')->name('category.search');
 });
 
 Route::prefix('/post')->namespace('backend')->group(function(){
