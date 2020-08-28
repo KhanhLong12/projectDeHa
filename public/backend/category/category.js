@@ -1,5 +1,6 @@
 
  const POST_METHOD = 'POST';
+ const GET_METHOD  = 'GET';
 //add item
 $(document).ready(function(){
 
@@ -110,6 +111,22 @@ $(document).ready(function(){
         })
 
     });
+
+
+    $(document).ready(function() {
+       $('#search').on('keyup', function() {
+          // event.preventDefault();
+          let formData       = $('#formSearch');
+          var data           = $(this).val();
+          var url            = formData.attr('action');
+          // console.log(url);
+          // return false;
+          callCategoryApi(url+'?search='+data)
+          .then((res)=>{
+            $('#list').replaceWith(res);
+        })
+      });
+   });
 
 
 });

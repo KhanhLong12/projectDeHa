@@ -30,5 +30,10 @@ class Category extends Model
         $result = Category::create($attribute);
         return $result;
     }
+
+    public function search($search){
+        $result = Category::where('name', 'like', '%'. $search .'%')->get();
+        return $result;
+    }
     
 }
