@@ -7,7 +7,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="alert alert-danger print-error-msg" style="display:none">
+			<div class="alert alert-danger print-error-msg-edit" style="display:none">
 		        <ul></ul>
 		    </div>
 			<div class="modal-body">
@@ -18,15 +18,7 @@
 						<input type="text" name="name" class="form-control ftname" placeholder="Nhap ten danh muc">
 					</div>
 
-					<div class="form-group">
-						<label>Danh muc</label>
-						<select class="custom-select ftparent_category" name="parent_category">
-							<option value="danh muc cha">danh muc cha</option>
-							@foreach($parent_category as $item)
-								<option value="{{ $item->name }}">{{ $item->name }}</option>
-							@endforeach
-						</select>
-					</div>
+					@include('backend.page.category.parent_category_edit')
 
 					<div class="form-group">
 						<label for="exampleInputStatus">Hien thi</label>

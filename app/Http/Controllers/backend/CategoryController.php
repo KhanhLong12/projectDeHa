@@ -127,4 +127,14 @@ class CategoryController extends Controller
         $parent_category = $this->category->listItems('get_parent_name');
         return view('backend.page.category.list',compact('items','parent_category'));
     }
+
+    public function getParentCategory(){
+        $parent_category = $this->category->listItems('get_parent_name');
+        return view('backend.page.category.parent_category',compact('parent_category'));
+    }
+
+    public function getParentCategoryEdit(){
+        $parent_category = $this->category->listItems('get_parent_name');
+        return view('backend.page.category.parent_category_edit',compact('parent_category'));
+    }
 }

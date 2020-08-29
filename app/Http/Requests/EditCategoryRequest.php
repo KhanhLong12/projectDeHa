@@ -24,7 +24,7 @@ class EditCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => 'required|min:3|max:255|unique:categories',
+            'name'      => 'required|min:3|max:255',
             'display'   => 'in:co,khong',
         ];
     }
@@ -36,7 +36,6 @@ class EditCategoryRequest extends FormRequest
             'min'       => ':attribute khong nho hon 3 ky tu',
             'max'       => ':attribute khong lon hon 255 ky tu',
             'in'        => ':attribute chua duoc chon',
-            'unique'    => ':attribute da ton tai',
         ];
     }
 

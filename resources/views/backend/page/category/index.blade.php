@@ -47,17 +47,13 @@
 	</div> 
 </div>
 
-<div class="row">
-	<div id="list">
-		
-	</div>
-
-</div>
 
 @endsection
 @push('js')
 <script type="text/javascript">
 	let urlList = "{{route('category.list')}}";
+	let urlCategory = "{{route('category.category')}}";
+	let urlCategoryEdit = "{{route('category.category_edit')}}";
 </script>
 <script src="{{ asset('backend/category/category.js') }}"></script>
 @endpush
