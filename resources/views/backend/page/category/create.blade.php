@@ -17,16 +17,7 @@
 						<label for="exampleInputName">Ten danh muc</label>
 						<input type="text" name="name" class="form-control" id="name" placeholder="Nhap ten danh muc">
 					</div>
-
-					<div class="form-group">
-						<label>Danh muc</label>
-						<select class="custom-select" id="parent_category" name="parent_category">
-							<option value="danh muc cha">danh muc cha</option>
-							@foreach($parent_category as $item)
-								<option value="{{ $item->name }}">{{ $item->name }}</option>
-							@endforeach
-						</select>
-					</div>
+						@include('backend.page.category.parent_category')
 
 					<div class="form-group">
 						<label for="exampleInputStatus">Hien thi</label>
