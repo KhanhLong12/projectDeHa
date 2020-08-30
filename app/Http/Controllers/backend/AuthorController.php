@@ -114,4 +114,11 @@ class AuthorController extends Controller
                 'author'          => $author,
             ], 200);
     }
+
+    public function fcsearch(Request $request)
+    {
+
+        $items = $this->author->search($request->input('search'));
+        return view('backend.page.author.list',compact('items'));
+    }
 }

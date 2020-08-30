@@ -26,4 +26,9 @@ class Author extends Model
         $result = Author::create($attribute);
         return $result;
     }
+
+    public function search($search){
+        $result = Author::where('name', 'like', '%'. $search .'%')->get();
+        return $result;
+    }
 }
