@@ -42,6 +42,7 @@ Route::prefix('/author')->namespace('backend')->group(function(){
 	Route::post('/store','AuthorController@store')->name('author.store');
 	Route::get('/edit/{id}','AuthorController@edit')->name('author.edit');
 	Route::post('/update/{id}','AuthorController@update')->name('author.update');
+	Route::post('/delete/{id}','AuthorController@destroy')->name('author.delete');
 });
 
 Auth::routes();

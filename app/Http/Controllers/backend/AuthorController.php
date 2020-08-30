@@ -94,9 +94,9 @@ class AuthorController extends Controller
      */
     public function update(EditAuthorRequest $request, $id)
     {
-        $category  = Author::findOrFail($id)->update($request->all());
+        $author  = Author::findOrFail($id)->update($request->all());
             return response()->json([
-                'category'  => $category,
+                'author'  => $author,
             ], 200);
 
     }
@@ -109,6 +109,9 @@ class AuthorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $author = Author::findOrFail($id)->delete();
+        return response()->json([
+                'author'          => $author,
+            ], 200);
     }
 }
