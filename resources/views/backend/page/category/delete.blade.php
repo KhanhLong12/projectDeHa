@@ -11,7 +11,8 @@
 				<form id="formDelete" method="post" action="" enctype="multipart/form-data">
 					@csrf
 					<div class="form-group">
-						<label for="recipient-name" class="col-form-label">Ban co muon xoa?</label>
+						<label for="recipient-name" class="col-form-label">Ban co muon xoa danh muc nay?</label>
+						<label for="recipient-name" class="col-form-label" style="color: red">(tat ca danh muc con cung se bi xoa theo)</label>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Dong</button>
