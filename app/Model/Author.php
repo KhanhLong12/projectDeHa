@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Author extends Model
 {
     protected $table = 'authors';
+    protected $fillable = ['name','thumbnail'];
 
     public function posts()
     {
@@ -19,5 +20,10 @@ class Author extends Model
         }
             
     	return $result;
+    }
+
+    public function store($attribute){
+        $result = Author::create($attribute);
+        return $result;
     }
 }

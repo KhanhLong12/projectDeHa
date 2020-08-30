@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Author;
+use App\Http\Requests\StoreAuthorRequest;
 
 class AuthorController extends Controller
 {
@@ -29,6 +30,12 @@ class AuthorController extends Controller
         ]);
     }
 
+    public function list(Request $request)
+    {
+        $items           = $this->author->all();
+        return view('backend.page.author.list',compact('items'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -45,9 +52,13 @@ class AuthorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAuthorRequest $request)
     {
-        //
+        // dd($request->file('thumb'));
+        $author = $this->author->store($request->all());
+            return response()->json([
+                'author'  => $author,
+            ], 200);
     }
 
     /**

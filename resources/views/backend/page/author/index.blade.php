@@ -10,6 +10,10 @@
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAuthor">
 		<i class="fas fa-plus"></i> Them moi
 	</button>
+
+	<!-- ----create author------ -->
+	@include('backend.page.author.create')
+
 	<div class="table-responsive">
 		<div class="table-wrapper">			
 			<div class="table-title">
