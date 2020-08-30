@@ -39,6 +39,7 @@ Route::prefix('/post')->namespace('backend')->group(function(){
 Route::prefix('/author')->namespace('backend')->group(function(){
 	Route::get('/index','AuthorController@index')->name('author.index');
 	Route::get('/list','AuthorController@list')->name('author.list');
+	Route::post('/store','AuthorController@store')->name('author.store');
 });
 
 Auth::routes();
