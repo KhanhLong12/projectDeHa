@@ -36,6 +36,11 @@ Route::prefix('/post')->namespace('backend')->group(function(){
 	// Route::post('/delete/{id}','CategoryController@destroy')->name('category.delete');
 });
 
+Route::prefix('/author')->namespace('backend')->group(function(){
+	Route::get('/index','AuthorController@index')->name('author.index');
+	Route::get('/list','AuthorController@list')->name('author.list');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('dashboard');
