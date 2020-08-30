@@ -40,6 +40,8 @@ Route::prefix('/author')->namespace('backend')->group(function(){
 	Route::get('/index','AuthorController@index')->name('author.index');
 	Route::get('/list','AuthorController@list')->name('author.list');
 	Route::post('/store','AuthorController@store')->name('author.store');
+	Route::get('/edit/{id}','AuthorController@edit')->name('author.edit');
+	Route::post('/update/{id}','AuthorController@update')->name('author.update');
 });
 
 Auth::routes();
