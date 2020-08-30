@@ -102,4 +102,26 @@ $(document).ready(function(){
         })
     });
 
+
+
+    // ------delete record----------
+    $(document).on('click', '.btnDelete', function(){
+        var url = $(this).attr('href');
+        $('#formDelete').attr('action', function(i, value) {
+            return url;
+        });
+    });
+
+    $(document).on('click', '#delete-author', function(){
+        let formData       = $('#formDelete');
+        var url            = formData.attr('action');
+        callCategoryApi(url, null,POST_METHOD)
+        .then((res)=>{
+            getList(urlList)
+            toastr.success('Xoa tac gia thanh cong');
+            $('#deleteForm').modal('hide');
+        })
+
+    });
+
 });

@@ -17,6 +17,9 @@
 	<!-- ----edit author------ -->
 	@include('backend.page.author.edit')
 
+	<!-- ----delete author------ -->
+	@include('backend.page.author.delete')
+
 	<div class="table-responsive">
 		<div class="table-wrapper">			
 			<div class="table-title">
