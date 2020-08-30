@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Author;
 use App\Http\Requests\StoreAuthorRequest;
+use App\Http\Requests\EditAuthorRequest;
 
 class AuthorController extends Controller
 {
@@ -80,7 +81,8 @@ class AuthorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Author::findOrFail($id);
+        return response()->json(['data' => $data]);
     }
 
     /**
@@ -90,9 +92,13 @@ class AuthorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditAuthorRequest $request, $id)
     {
-        //
+        $category  = Author::findOrFail($id)->update($request->all());
+            return response()->json([
+                'category'  => $category,
+            ], 200);
+
     }
 
     /**

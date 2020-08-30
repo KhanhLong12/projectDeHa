@@ -58,4 +58,48 @@ $(document).ready(function(){
         });
     }
 
+
+    // --------thong bao loi phan edit---------
+    function printErrorMsgEdit(msg){
+        $(".print-error-msg-edit").find("ul").html('');
+        $(".print-error-msg-edit").css('display','block');
+        $.each( msg, function( key, value ) {
+            $(".print-error-msg-edit").find("ul").append('<li>'+value+'</li>');
+        });
+    }
+
+    // -------edit author----------
+    // get record
+    $(document).on('click', '.btnEdit', function(){
+        var url = $(this).attr('href');
+        var urlUpdate = $(this).attr('data-update');
+        callCategoryApi(url, null,null)
+        .then((res)=>{
+            // console.log(res);
+            // return false;
+            $('.ftname').val(res.data.name);
+            $('#editFormID').attr('action', function(i, value) {
+                return urlUpdate;
+            });
+        })
+    });
+
+    // update record
+    $(document).on('click', '.edit-new-author', function(){
+        let formData       = $('#editFormID');
+        var url            = formData.attr('action');
+        let data           = formData.serialize();
+        callCategoryApi(url, data,POST_METHOD)
+        .then((res)=>{
+            getList(urlList)
+            toastr.success('Sua tac gia thanh cong');
+            $('#editAuthor').modal('hide');
+        })
+        .catch((res)=>{
+            if (res.status == 422) {
+                printErrorMsgEdit(res.responseJSON.errors);
+            }
+        })
+    });
+
 });

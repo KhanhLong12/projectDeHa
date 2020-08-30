@@ -31,7 +31,7 @@
 
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">huy</button>
-						<button type="button" class="btn btn-primary edit-new-category">them moi</button>
+						<button type="button" class="btn btn-primary edit-new-category">Dong y</button>
 					</div>
 				</form>
 			</div>

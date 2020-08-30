@@ -14,6 +14,9 @@
 	<!-- ----create author------ -->
 	@include('backend.page.author.create')
 
+	<!-- ----edit author------ -->
+	@include('backend.page.author.edit')
+
 	<div class="table-responsive">
 		<div class="table-wrapper">			
 			<div class="table-title">
@@ -36,3 +39,9 @@
 	</div>        
 </div>
 @endsection
+@push('js')
+<script type="text/javascript">
+	let urlList = "{{route('author.list')}}";
+</script>
+<script src="{{ asset('backend/author/author.js') }}"></script>
+@endpush
