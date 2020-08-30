@@ -12,4 +12,12 @@ class Author extends Model
     {
         return $this->hasMany('App\Model\Post','author_id');
     }
+
+    public function listItems($options){
+        if ($options == 'get_all_items') {
+            $result = Author::all();
+        }
+            
+    	return $result;
+    }
 }
