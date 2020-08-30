@@ -29,10 +29,12 @@
 					</div>
 					<div class="col-sm-6">
 						<div class="search-box">
-							<div class="input-group">								
-								<input type="text" id="search" class="form-control" placeholder="Search by Name">
-								<span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
-							</div>
+							<form class="form-inline" id="formSearch" name="search" action="{{ route('author.search') }}">
+								<div class="form-group">								
+									<input type="text" id="search" class="form-control" placeholder="Search by Name">
+									<span class="input-group-addon"><i class="material-icons">&#xE8B6;</i></span>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>

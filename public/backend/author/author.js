@@ -18,7 +18,7 @@ $(document).ready(function(){
 
         let url            = formData.attr('action');
         
-      callCategoryApi(url, data,POST_METHOD)
+      callAuthorApi(url, data,POST_METHOD)
         .then((res)=>{
             getList(urlList)
             toastr.success('Them danh muc thanh cong');
@@ -32,7 +32,7 @@ $(document).ready(function(){
     });
 
 
-    function callCategoryApi(url,data={}, method='get')
+    function callAuthorApi(url,data={}, method='get')
     {
         return $.ajax({
             url:url,
@@ -43,7 +43,7 @@ $(document).ready(function(){
 
     function getList(url)
     {
-        callCategoryApi(url)
+        callAuthorApi(url)
         .then((res)=>{
             $('#list').replaceWith(res);
         })
@@ -73,7 +73,7 @@ $(document).ready(function(){
     $(document).on('click', '.btnEdit', function(){
         var url = $(this).attr('href');
         var urlUpdate = $(this).attr('data-update');
-        callCategoryApi(url, null,null)
+        callAuthorApi(url, null,null)
         .then((res)=>{
             // console.log(res);
             // return false;
@@ -89,7 +89,7 @@ $(document).ready(function(){
         let formData       = $('#editFormID');
         var url            = formData.attr('action');
         let data           = formData.serialize();
-        callCategoryApi(url, data,POST_METHOD)
+        callAuthorApi(url, data,POST_METHOD)
         .then((res)=>{
             getList(urlList)
             toastr.success('Sua tac gia thanh cong');
@@ -115,7 +115,7 @@ $(document).ready(function(){
     $(document).on('click', '#delete-author', function(){
         let formData       = $('#formDelete');
         var url            = formData.attr('action');
-        callCategoryApi(url, null,POST_METHOD)
+        callAuthorApi(url, null,POST_METHOD)
         .then((res)=>{
             getList(urlList)
             toastr.success('Xoa tac gia thanh cong');
@@ -123,5 +123,18 @@ $(document).ready(function(){
         })
 
     });
+
+
+    $(document).ready(function() {
+       $('#search').on('keyup', function() {
+          let formData       = $('#formSearch');
+          var data           = $(this).val();
+          var url            = formData.attr('action');
+          callAuthorApi(url+'?search='+data)
+          .then((res)=>{
+            $('#list').replaceWith(res);
+        })
+      });
+   });
 
 });
