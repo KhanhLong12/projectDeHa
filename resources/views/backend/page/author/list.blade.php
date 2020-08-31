@@ -16,7 +16,7 @@
 					<td>{{ $value['name'] }}</td>
 					<td>{{ $value['thumbnail'] }}</td>
 					<td>
-						<a href="#" class="show" title="Show" data-toggle="tooltip" style="color: blue"><i class="fas fa-eye"></i></a>
+						<a href="{{route('author.detail',$value['id'])}}" class="show" title="Show" data-toggle="tooltip" style="color: blue"><i class="fas fa-eye"></i></a>
 						<a href="{{route('author.edit',$value['id'])}}" class="edit btnEdit" data-toggle="modal" data-target="#editAuthor" data-update="{{route('author.update',$value['id'])}}"><i class="material-icons">&#xE254;</i></a>
 						<a href="{{route('author.delete',$value['id'])}}" class="delete btnDelete" data-toggle="modal" data-target="#deleteForm"><i class="material-icons">&#xE872;</i></a>
 					</td>
