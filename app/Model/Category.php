@@ -21,7 +21,7 @@ class Category extends Model
             $result = Category::all();
         }
         elseif ($options == 'get_parent_name') {
-            $result = Category::where('parent_category','=','danh muc cha')->get();
+            $result = Category::where('parent_category','=','danh muc cha')->get('name');
         }
             
     	return $result;

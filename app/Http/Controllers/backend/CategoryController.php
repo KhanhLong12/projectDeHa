@@ -106,9 +106,12 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id)->delete();
+        $category = Category::findOrFail($id);
+        $item_of_category = Category::where('parent_category', '=', $category->name)->delete();
+        $category->delete();
         return response()->json([
-                'category'  => $category,
+                'category'          => $category,
+                'item_of_category'  => $item_of_category,
             ], 200);
     }
 
@@ -126,5 +129,15 @@ class CategoryController extends Controller
         $items           = $this->category->search($request->input('search'));
         $parent_category = $this->category->listItems('get_parent_name');
         return view('backend.page.category.list',compact('items','parent_category'));
+    }
+
+    public function getParentCategory(){
+        $parent_category = $this->category->listItems('get_parent_name');
+        return view('backend.page.category.parent_category',compact('parent_category'));
+    }
+
+    public function getParentCategoryEdit(){
+        $parent_category = $this->category->listItems('get_parent_name');
+        return view('backend.page.category.parent_category_edit',compact('parent_category'));
     }
 }

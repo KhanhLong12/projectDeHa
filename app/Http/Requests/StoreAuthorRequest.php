@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EditCategoryRequest extends FormRequest
+class StoreAuthorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class EditCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => 'required|min:3|max:255',
-            'display'   => 'in:co,khong',
+            'name'      => 'required|min:3|max:255|unique:authors',
         ];
     }
 
@@ -35,7 +34,7 @@ class EditCategoryRequest extends FormRequest
             'required'  => ':attribute khong duoc de trong',
             'min'       => ':attribute khong nho hon 3 ky tu',
             'max'       => ':attribute khong lon hon 255 ky tu',
-            'in'        => ':attribute chua duoc chon',
+            'unique'    => ':attribute da ton tai',
         ];
     }
 
@@ -48,8 +47,7 @@ class EditCategoryRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'      => 'Ten danh muc',
-            'display'   => 'Hien thi danh muc',
+            'name'      => 'Ten tac gia',
         ];
     }
 }

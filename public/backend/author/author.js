@@ -11,20 +11,18 @@ $(document).ready(function(){
     });
 
     // -------createform-----------
-   $(document).on('click', '#create-new-category', function(){
+   $(document).on('click', '#create-new-author', function(){
       
         let formData       = $('#createFormID');
         let data           = formData.serialize();
 
         let url            = formData.attr('action');
         
-      callCategoryApi(url, data,POST_METHOD)
+      callAuthorApi(url, data,POST_METHOD)
         .then((res)=>{
             getList(urlList)
-            getCategory(urlCategory)
-            getCategoryEdit(urlCategoryEdit)
             toastr.success('Them danh muc thanh cong');
-            $('#addCategory').modal('hide');
+            $('#addAuthor').modal('hide');
         })
         .catch((res)=>{
             if (res.status == 422) {
@@ -34,7 +32,7 @@ $(document).ready(function(){
     });
 
 
-    function callCategoryApi(url,data={}, method='get')
+    function callAuthorApi(url,data={}, method='get')
     {
         return $.ajax({
             url:url,
@@ -45,11 +43,12 @@ $(document).ready(function(){
 
     function getList(url)
     {
-        callCategoryApi(url)
+        callAuthorApi(url)
         .then((res)=>{
             $('#list').replaceWith(res);
         })
     }
+
     // --------thong bao loi phan create---------
     function printErrorMsg(msg){
         $(".print-error-msg").find("ul").html('');
@@ -58,6 +57,7 @@ $(document).ready(function(){
             $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
         });
     }
+
 
     // --------thong bao loi phan edit---------
     function printErrorMsgEdit(msg){
@@ -68,16 +68,16 @@ $(document).ready(function(){
         });
     }
 
-    // -------edit category----------
+    // -------edit author----------
     // get record
     $(document).on('click', '.btnEdit', function(){
         var url = $(this).attr('href');
         var urlUpdate = $(this).attr('data-update');
-        callCategoryApi(url, null,null)
+        callAuthorApi(url, null,null)
         .then((res)=>{
+            // console.log(res);
+            // return false;
             $('.ftname').val(res.data.name);
-            $('.ftparent_category').val(res.data.parent_category);
-            $('.ftdisplay').val(res.data.display);
             $('#editFormID').attr('action', function(i, value) {
                 return urlUpdate;
             });
@@ -85,18 +85,15 @@ $(document).ready(function(){
     });
 
     // update record
-    $(document).on('click', '.edit-new-category', function(){
+    $(document).on('click', '.edit-new-author', function(){
         let formData       = $('#editFormID');
         var url            = formData.attr('action');
         let data           = formData.serialize();
-
-        callCategoryApi(url, data,POST_METHOD)
+        callAuthorApi(url, data,POST_METHOD)
         .then((res)=>{
             getList(urlList)
-            getCategory(urlCategory)
-            getCategoryEdit(urlCategoryEdit)
-            toastr.success('Sua danh muc thanh cong');
-            $('#editCategory').modal('hide');
+            toastr.success('Sua tac gia thanh cong');
+            $('#editAuthor').modal('hide');
         })
         .catch((res)=>{
             if (res.status == 422) {
@@ -104,6 +101,7 @@ $(document).ready(function(){
             }
         })
     });
+
 
 
     // ------delete record----------
@@ -114,14 +112,13 @@ $(document).ready(function(){
         });
     });
 
-    $(document).on('click', '#delete-category', function(){
+    $(document).on('click', '#delete-author', function(){
         let formData       = $('#formDelete');
         var url            = formData.attr('action');
-        callCategoryApi(url, null,POST_METHOD)
+        callAuthorApi(url, null,POST_METHOD)
         .then((res)=>{
-            getCategoryEdit(urlCategoryEdit)
             getList(urlList)
-            toastr.success('Xoa danh muc thanh cong');
+            toastr.success('Xoa tac gia thanh cong');
             $('#deleteForm').modal('hide');
         })
 
@@ -133,29 +130,11 @@ $(document).ready(function(){
           let formData       = $('#formSearch');
           var data           = $(this).val();
           var url            = formData.attr('action');
-          callCategoryApi(url+'?search='+data)
+          callAuthorApi(url+'?search='+data)
           .then((res)=>{
             $('#list').replaceWith(res);
         })
       });
    });
 
-
-    function getCategory(url){
-        callCategoryApi(url)
-        .then((res)=>{
-            $('#parent_category').replaceWith(res);
-        })
-    }
-
-
-    function getCategoryEdit(url){
-        callCategoryApi(url)
-        .then((res)=>{
-            $('#parent_category_edit').replaceWith(res);
-        })
-    }
-
-
 });
-

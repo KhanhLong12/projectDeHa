@@ -11,12 +11,11 @@
 				<form id="formDelete" method="post" action="" enctype="multipart/form-data">
 					@csrf
 					<div class="form-group">
-						<label for="recipient-name" class="col-form-label">Ban co muon xoa danh muc nay?</label>
-						<label for="recipient-name" class="col-form-label" style="color: red">(tat ca danh muc con cung se bi xoa theo)</label>
+						<label for="recipient-name" class="col-form-label">Ban co muon xoa tac gia?</label>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Dong</button>
-						<button type="button" id="delete-category" class="btn btn-danger">Chap nhan</button>
+						<button type="button" id="delete-author" class="btn btn-danger">Chap nhan</button>
 					</div>
 				</form>
 			</div>
