@@ -5,6 +5,11 @@ namespace App\Http\Controllers\backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Post;
+use App\Model\Category;
+use App\Model\Author;
+use App\Model\Image;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
@@ -14,18 +19,40 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected $post;
-    public function __construct(Post $post){
 
+    protected $category;
+
+    public function __construct(Post $post, Category $category){
         $this->post = $post;
+        $this->category = $category;
     }
 
     public function index()
     {
-        $items = $this->post->listItems('get_all_items');
+        $posts      = $this->post->listItems('get_all_items');
+
+        $categories = $this->category->listItems('get_all_items');
+
+        $authors    = Author::all();
 
         return view('backend.page.post.index')->with([
-            'items' => $items,
+            'posts'      => $posts,
+            'categories' => $categories,
+            'authors'    => $authors,
         ]);
+        
+    }
+
+    public function list(Request $request)
+    {
+        $posts      = $this->post->listItems('get_all_items');
+
+        $categories = $this->category->listItems('get_all_items');
+
+        $authors    = Author::all();
+
+        
+        return view('backend.page.post.list',compact('posts', 'categories', 'authors'));
     }
 
     /**
@@ -44,9 +71,16 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        $post = $this->post->storePost($request->all());
+
+        $images = $this->post->getUrlImage($request,$post->id);
+
+        return response()->json([
+            'post'  => $post,
+            'images'  => $images,
+        ], 200);
     }
 
     /**

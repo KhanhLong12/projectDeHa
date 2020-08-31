@@ -35,6 +35,7 @@
     </div>
     <script src="{{ asset('backend/js/scripts.js') }}"></script>
     <script src="{{ asset('backend/js/toastr.js') }}"></script>
+    <script src="{{ asset('vendor/unisharp/laravel-ckeditor/ckeditor.js' )}}"></script>
     @stack('js')
     <script type='text/javascript'> 
       setTimeout(
