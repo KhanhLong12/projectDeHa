@@ -70,7 +70,9 @@ class AuthorController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = $this->author->detail($id);
+        // dd($data[1]);
+        return view('backend.page.author.detail', compact('data'));
     }
 
     /**

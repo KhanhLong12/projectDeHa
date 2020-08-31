@@ -44,6 +44,7 @@ Route::prefix('/author')->namespace('backend')->group(function(){
 	Route::post('/update/{id}','AuthorController@update')->name('author.update');
 	Route::post('/delete/{id}','AuthorController@destroy')->name('author.delete');
 	Route::get('/search', 'AuthorController@fcsearch')->name('author.search');
+	Route::get('/detail/{id}', 'AuthorController@show')->name('author.detail');
 });
 
 Auth::routes();

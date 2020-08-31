@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Model\Post;
 
 class Author extends Model
 {
@@ -30,5 +31,12 @@ class Author extends Model
     public function search($search){
         $result = Author::where('name', 'like', '%'. $search .'%')->get();
         return $result;
+    }
+
+    public function detail($id){
+        $author = Author::findOrFail($id);
+        $result = Post::where('author_id','=',$author->id)->get();
+        $data   = [$author, $result];
+        return $data;
     }
 }
