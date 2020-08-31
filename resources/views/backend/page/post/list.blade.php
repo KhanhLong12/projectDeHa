@@ -1,5 +1,5 @@
 <div id="list">
-	@if($items->count() > 0)
+	@if($posts->count() > 0)
 	<table class="table table-striped" id="organizationTable">
 		<thead>
 			<tr>
@@ -14,13 +14,13 @@
 		</thead>
 		<tbody>
 			<?php $key = 0 ?>
-			@foreach($items as $value)
+			@foreach($posts as $value)
 			<tr>
 				<td>{{ $key = $key+1 }}</td>
 				<td>{{ $value->name }}</td>
 				<td>{{ $value->category->name }}</td>
 				<td>{{ $value->author->name }}</td>
-				<td>{{ substr($value->description,0,-40) }}...</td>
+				<td>{!! substr($value->description,0,-40) !!}...</td>
 				<td>{{ $value->status }}</td>
 				<td>
 					<a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>

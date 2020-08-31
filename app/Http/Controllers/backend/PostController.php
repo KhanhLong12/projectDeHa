@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Model\Post;
 use App\Model\Category;
 use App\Model\Author;
+use App\Model\Image;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
@@ -16,7 +19,9 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     protected $post;
+
     protected $category;
+
     public function __construct(Post $post, Category $category){
         $this->post = $post;
         $this->category = $category;
@@ -24,14 +29,14 @@ class PostController extends Controller
 
     public function index()
     {
-        $items      = $this->post->listItems('get_all_items');
+        $posts      = $this->post->listItems('get_all_items');
 
         $categories = $this->category->listItems('get_all_items');
 
         $authors    = Author::all();
 
         return view('backend.page.post.index')->with([
-            'items'      => $items,
+            'posts'      => $posts,
             'categories' => $categories,
             'authors'    => $authors,
         ]);
@@ -40,14 +45,14 @@ class PostController extends Controller
 
     public function list(Request $request)
     {
-        $items      = $this->post->listItems('get_all_items');
+        $posts      = $this->post->listItems('get_all_items');
 
         $categories = $this->category->listItems('get_all_items');
 
         $authors    = Author::all();
 
         
-        return view('backend.page.post.list',compact('items', 'categories', 'authors'));
+        return view('backend.page.post.list',compact('posts', 'categories', 'authors'));
     }
 
     /**
@@ -66,12 +71,16 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $post = $this->post->store($request->all());
+        $post = $this->post->storePost($request->all());
+
+        $images = $this->post->getUrlImage($request,$post->id);
+
         return response()->json([
-                'post'  => $post,
-            ], 200);
+            'post'  => $post,
+            'images'  => $images,
+        ], 200);
     }
 
     /**

@@ -35,7 +35,6 @@
 @endsection
 @push('js')
 <script type="text/javascript">
-	CKEDITOR.replace( 'content' );
 	var urlList = "{{route('post.list')}}";
 </script>
 <script src="{{ asset('backend/post/post.js') }}"></script>
