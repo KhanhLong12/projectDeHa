@@ -28,7 +28,7 @@
 					<div class="title" style="font-size: 20px; color: black; font-weight: bold ;border-bottom: 1px solid #dedede; padding: 10px 0px;">
 						Danh sach truyen 
 					</div>
-					@if(!$data[0]->name)
+					@if($data[0]->name)
 						<?php $key = 0; ?>
 							
 						<div style="padding: 10px 0px;">

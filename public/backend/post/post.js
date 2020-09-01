@@ -59,4 +59,26 @@ $(document).ready(function(){
             $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
         });
     }
+
+
+
+    // ------delete record----------
+    $(document).on('click', '.btnDelete', function(){
+        var url = $(this).attr('href');
+        $('#formDelete').attr('action', function(i, value) {
+            return url;
+        });
+    });
+
+    $(document).on('click', '#delete-post', function(){
+        let formData       = $('#formDelete');
+        var url            = formData.attr('action');
+        callPostApi(url, null,POST_METHOD)
+        .then((res)=>{
+            getList(urlList)
+            toastr.success('Xoa truyen thanh cong');
+            $('#deleteForm').modal('hide');
+        })
+
+    });
 });

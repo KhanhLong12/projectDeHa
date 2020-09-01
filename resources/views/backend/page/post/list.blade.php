@@ -24,7 +24,7 @@
 				<td>{{ $value->status }}</td>
 				<td>
 					<a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-					<a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+					<a href="{{route('post.delete',$value['id'])}}" class="delete btnDelete" data-toggle="modal" data-target="#deleteForm"><i class="material-icons">&#xE872;</i></a>
 				</td>
 			</tr> 
 			@endforeach     

@@ -67,4 +67,10 @@ class Post extends Model
         }
         return $info_images;
     }
+
+
+    public function deletePost($id){
+        $post = $this->find($id)->delete();
+        return $post;
+    }
 }

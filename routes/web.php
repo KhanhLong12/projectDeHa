@@ -31,6 +31,7 @@ Route::prefix('/post')->namespace('backend')->group(function(){
 	Route::get('/index','PostController@index')->name('post.index');
 	Route::get('/list','PostController@list')->name('post.list');
 	Route::post('/store','PostController@store')->name('post.store');
+	Route::post('/delete/{id}','PostController@destroy')->name('post.delete');
 });
 
 Route::prefix('/author')->namespace('backend')->group(function(){

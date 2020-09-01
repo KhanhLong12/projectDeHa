@@ -125,6 +125,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = $this->post->deletePost($id);
+        return response()->json([
+                'post' => $post,
+            ], 200);
     }
 }
