@@ -14,7 +14,7 @@ $(document).ready(function(){
    $(document).on('click', '#create-new-author', function(){
       
         let formData       = $('#createFormID');
-        let data           = formData.serialize();
+        let data           = new FormData($('#createFormID')[0]);
 
         let url            = formData.attr('action');
         
@@ -38,6 +38,8 @@ $(document).ready(function(){
             url:url,
             data:data,
             method:method,
+            processData: false,
+            contentType: false,
         })
     }
 
@@ -73,11 +75,12 @@ $(document).ready(function(){
     $(document).on('click', '.btnEdit', function(){
         var url = $(this).attr('href');
         var urlUpdate = $(this).attr('data-update');
+
         callAuthorApi(url, null,null)
-        .then((res)=>{
-            // console.log(res);
-            // return false;
+        .then((res)=>{;
             $('.ftname').val(res.data.name);
+            var src = "http://localhost:8888/images/author/"+res.data.thumbnail+"";
+            $(".ftThumbnail").attr("src",src);
             $('#editFormID').attr('action', function(i, value) {
                 return urlUpdate;
             });
@@ -88,7 +91,7 @@ $(document).ready(function(){
     $(document).on('click', '.edit-new-author', function(){
         let formData       = $('#editFormID');
         var url            = formData.attr('action');
-        let data           = formData.serialize();
+        let data           = new FormData($('#editFormID')[0]);
         callAuthorApi(url, data,POST_METHOD)
         .then((res)=>{
             getList(urlList)
