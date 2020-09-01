@@ -55,8 +55,7 @@ class AuthorController extends Controller
      */
     public function store(StoreAuthorRequest $request)
     {
-        // dd($request->file('thumb'));
-        $author = $this->author->store($request->all());
+        $author = $this->author->createAuthor($request->all());
             return response()->json([
                 'author'  => $author,
             ], 200);
@@ -83,7 +82,7 @@ class AuthorController extends Controller
      */
     public function edit($id)
     {
-        $data = Author::findOrFail($id);
+        $data = $this->author->editAuthor($id);
         return response()->json(['data' => $data]);
     }
 
@@ -96,9 +95,10 @@ class AuthorController extends Controller
      */
     public function update(EditAuthorRequest $request, $id)
     {
-        $author  = Author::findOrFail($id)->update($request->all());
+        $author       = $this->author->editAuthor($id);
+        $updateAuthor = $author->updateAuthor($request->all());
             return response()->json([
-                'author'  => $author,
+                'author'        => $author,
             ], 200);
 
     }

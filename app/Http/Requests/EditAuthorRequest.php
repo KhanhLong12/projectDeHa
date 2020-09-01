@@ -23,8 +23,14 @@ class EditAuthorRequest extends FormRequest
      */
     public function rules()
     {
+        // $id     = $this->id;
+        // $thumb  = 'required|image|max:2000';
+        // if (!empty($id)) {
+        //     $thumb  = '';
+        // }
         return [
-            'name'      => 'required|min:3|max:255',
+            'name'           => 'required|min:3|max:255|unique:authors,name,'.$this->id,
+            'thumbnail'      => 'image|max:2000'
         ];
     }
 

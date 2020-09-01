@@ -14,7 +14,11 @@
 				<tr>
 					<td>{{ $key + 1 }}</td>
 					<td>{{ $value['name'] }}</td>
-					<td>{{ $value['thumbnail'] }}</td>
+					@if($value['thumbnail'])
+						<td><img src="{{ asset('images/author/'.$value['thumbnail']) }}" style="width: 20%;"></td>
+					@else
+						<td><img src="{{ asset('backend/assets/img/unnamed.png') }}" style="width: 20%;"></td>
+					@endif
 					<td>
 						<a href="{{route('author.detail',$value['id'])}}" class="show" title="Show" data-toggle="tooltip" style="color: blue"><i class="fas fa-eye"></i></a>
 						<a href="{{route('author.edit',$value['id'])}}" class="edit btnEdit" data-toggle="modal" data-target="#editAuthor" data-update="{{route('author.update',$value['id'])}}"><i class="material-icons">&#xE254;</i></a>

@@ -24,17 +24,20 @@ class StoreAuthorRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => 'required|min:3|max:255|unique:authors',
+            'name'           => 'required|min:3|max:255|unique:authors',
+            'thumbnail'      => 'required|image|max:2000',
         ];
     }
 
     public function messages()
     {
         return [
-            'required'  => ':attribute khong duoc de trong',
-            'min'       => ':attribute khong nho hon 3 ky tu',
-            'max'       => ':attribute khong lon hon 255 ky tu',
-            'unique'    => ':attribute da ton tai',
+            'required'      => ':attribute khong duoc de trong',
+            'min'           => ':attribute khong nho hon 3 ky tu',
+            'max'           => ':attribute khong lon hon 255 ky tu',
+            'unique'        => ':attribute da ton tai',
+            'image'         => ':attribute sai dinh dang',
+            'image.*.max'   => ':attribute kich thuoc khong duoc vuot qua 2MB',
         ];
     }
 
@@ -47,7 +50,8 @@ class StoreAuthorRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'      => 'Ten tac gia',
+            'name'           => 'Ten tac gia',
+            'thumbnail'      => 'Anh',
         ];
     }
 }

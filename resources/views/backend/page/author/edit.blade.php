@@ -21,8 +21,10 @@
 					<div class="form-group">
 						<label for="exampleInputFile">Ảnh: <span style="color: #dc3545;">*</span></label>
 						<div class="custom-file">
-							<!-- <input type="file" class="form-control" id="exampleInputFile" id="thumb" name="thumb"> -->
+							<input type="file" class="custom-file-input" id="exampleInputFile" name="thumbnail" multiple>
+							<label class="custom-file-label" for="exampleInputFile">Choose file</label>
 						</div>
+						<img style="width: 20%" class="ftThumbnail" src="">
 					</div>
 
 					<div class="modal-footer">
