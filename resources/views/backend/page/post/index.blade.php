@@ -10,7 +10,11 @@
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPost">
 		<i class="fas fa-plus"></i> Them moi
 	</button>
+	<!-- ----create post------ -->
 	@include('backend.page.post.create')
+
+	<!-- ----delete post------ -->
+	@include('backend.page.post.delete')
 	<div class="table-responsive">
 		<div class="table-wrapper">			
 			<div class="table-title">
