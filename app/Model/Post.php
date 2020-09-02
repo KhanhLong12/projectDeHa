@@ -49,8 +49,9 @@ class Post extends Model
             $images = $file->file('images');
             foreach ($images as $key => $image) {
                 $namefile = $image->getClientOriginalName();
-                $url = 'storage/app/public/posts/' . $namefile;
-                Storage::disk('public')->putFileAs('posts', $image , $namefile);
+                $url = 'images/posts/' . $namefile;
+                $destinationPath = public_path('images/posts');
+                $image->move($destinationPath, $namefile);
                 $info_images[] = [
                     'url' => $url,
                     'name' => $namefile
@@ -69,8 +70,31 @@ class Post extends Model
     }
 
 
-    public function deletePost($id){
-        $post = $this->find($id)->delete();
+    public function getIdPost($id){
+        $post = $this->find($id);
         return $post;
+    }
+
+    public function deletePost(){
+        $post = $this->delete();
+        return $post;
+    }
+
+
+    public function editPost($id){
+        $post   = $this->find($id);
+        $images = Image::where('post_id','=',$post->id)->get();
+        $data   = [$post,$images];
+        return $data;
+    }
+
+    public function updatePost($attribute){
+        $result = $this->update($attribute);
+        return $result;
+    }
+
+    public function deleteImage($idPost){
+        $image = Image::where('post_id', '=', $idPost)->delete();
+        return $image;
     }
 }

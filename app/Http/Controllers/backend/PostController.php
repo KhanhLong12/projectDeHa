@@ -102,7 +102,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = $this->post->editPost($id);
+        return response()->json(['data' => $data]);
+
     }
 
     /**
@@ -114,7 +116,17 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data       = $this->post->editPost($id);
+
+        $updatePost = $data[0]->updatePost($request->all());
+
+        $images     = $this->post->getUrlImage($request,$data[0]['id']);
+
+        return response()->json([
+            'data'  => $data,
+            'images'  => $images,
+            'updatePost'  => $updatePost,
+        ], 200);
     }
 
     /**
@@ -125,9 +137,12 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = $this->post->deletePost($id);
+        $post   = $this->post->getIdPost($id);
+        $image  = $this->post->deleteImage($post->id);
+        $post->deletePost();
         return response()->json([
-                'post' => $post,
+                'post'  => $post,
+                'image' => $image,
             ], 200);
     }
 }

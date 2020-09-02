@@ -23,7 +23,7 @@
 				<td>{!! substr($value->description,0,-40) !!}...</td>
 				<td>{{ $value->status }}</td>
 				<td>
-					<a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+					<a href="{{ route('post.edit',$value->id) }}" class="edit btnEdit" data-toggle="modal" data-target="#editPost" data-update="{{ route('post.update',$value->id) }}"><i class="material-icons">&#xE254;</i></a>
 					<a href="{{route('post.delete',$value['id'])}}" class="delete btnDelete" data-toggle="modal" data-target="#deleteForm"><i class="material-icons">&#xE872;</i></a>
 				</td>
 			</tr> 
