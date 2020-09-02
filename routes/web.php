@@ -15,7 +15,7 @@
 //     return view('backend.dashboard.dashboard');
 // });
 
-Route::prefix('/category')->namespace('backend')->group(function(){
+Route::prefix('/category')->namespace('backend')->middleware('auth')->group(function(){
 	Route::get('/index','CategoryController@index')->name('category.index');
 	Route::post('/store','CategoryController@store')->name('category.store');
 	Route::get('/list','CategoryController@list')->name('category.list');
