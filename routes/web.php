@@ -32,6 +32,8 @@ Route::prefix('/post')->namespace('backend')->group(function(){
 	Route::get('/list','PostController@list')->name('post.list');
 	Route::post('/store','PostController@store')->name('post.store');
 	Route::post('/delete/{id}','PostController@destroy')->name('post.delete');
+	Route::get('/edit/{id}','PostController@edit')->name('post.edit');
+	Route::post('/update/{id}','PostController@update')->name('post.update');
 });
 
 Route::prefix('/author')->namespace('backend')->group(function(){
@@ -47,4 +49,4 @@ Route::prefix('/author')->namespace('backend')->group(function(){
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('dashboard');
+Route::get('/', 'HomeController@index')->name('dashboard');

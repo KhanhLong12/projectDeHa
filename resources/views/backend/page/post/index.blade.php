@@ -13,6 +13,9 @@
 	<!-- ----create post------ -->
 	@include('backend.page.post.create')
 
+	<!-- edit post -->
+	@include('backend.page.post.edit')
+
 	<!-- ----delete post------ -->
 	@include('backend.page.post.delete')
 	<div class="table-responsive">
@@ -39,6 +42,8 @@
 @endsection
 @push('js')
 <script type="text/javascript">
+	let postEditor = CKEDITOR.replace( 'contentEdit' );
+	let postCreate = CKEDITOR.replace( 'content' );
 	var urlList = "{{route('post.list')}}";
 </script>
 <script src="{{ asset('backend/post/post.js') }}"></script>

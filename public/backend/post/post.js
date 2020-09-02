@@ -7,14 +7,14 @@ $(document).ready(function(){
         }
     });
 
-    let postEditor = CKEDITOR.replace( 'content' );
+    // let postCreate = CKEDITOR.replace( 'content' );
 
     $(document).on('click', '#create-new-post', function(){
       
         let formData       = $('#createFormPostID');
         let data           = new FormData($('#createFormPostID')[0]);
         let url            = formData.attr('action');
-        let content        = postEditor.getData();
+        let content        = postCreate.getData();
         data.append('content', content);
         
 
@@ -80,5 +80,56 @@ $(document).ready(function(){
             $('#deleteForm').modal('hide');
         })
 
+    });
+
+
+    // -------edit category----------
+    // get record
+    $(document).on('click', '.btnEdit', function(){
+        var url = $(this).attr('href');
+        var urlUpdate = $(this).attr('data-update');
+        callPostApi(url, null,null)
+        .then((res)=>{
+
+            $('.ftname').val(res.data[0].name);
+            $('.ftCategory_id').val(res.data[0].category_id);
+            $('.ftAuthor_id').val(res.data[0].author_id);
+            $('.ftstatus').val(res.data[0].status);
+            $('.ftDescription').val(res.data[0].description);
+
+            $('.ftContent').val(res.data[0].content);
+            $(".ftImages").remove();
+            $.each( res.data[1], function( key, value ) {
+
+                var pathImage = "http://localhost:8888/"+value.path+"";
+                $(".thubnail").append("<img class='ftImages' style='width: 10%' src="+pathImage+">");
+
+            });
+            
+            $('#editFormPostID').attr('action', function(i, value) {
+                return urlUpdate;
+            });
+        })
+    });
+    // update record
+    $(document).on('click', '.edit-new-post', function(){
+        let formData       = $('#editFormPostID');
+        var url            = formData.attr('action');
+
+        let data           = new FormData($('#editFormPostID')[0]);
+        let content        = postEditor.getData();
+        data.append('content', content);
+
+        callPostApi(url, data,POST_METHOD)
+        .then((res)=>{
+            getList(urlList)
+            toastr.success('Sua danh muc thanh cong');
+            $('#editPost').modal('hide');
+        })
+        .catch((res)=>{
+            if (res.status == 422) {
+                printErrorMsgEdit(res.responseJSON.errors);
+            }
+        })
     });
 });
