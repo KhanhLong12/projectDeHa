@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\CheckEventRule;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -24,7 +25,12 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => 'required|min:3|max:255|unique:categories',
+            'name'      => ['required',
+                            'min:3',
+                            'max:255',
+                            'unique:categories',
+                            new CheckEventRule()
+                             ],
             'display'   => 'in:co,khong',
         ];
     }
