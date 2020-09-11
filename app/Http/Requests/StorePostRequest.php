@@ -24,30 +24,30 @@ class StorePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'         => 'required|min:3|max:255',
-            'content'      => 'required|min:5',
-            'category_id'  => 'notIn:Chon danh muc',
-            'author_id'    => 'notIn:Chon tac gia',
-            'description'  => 'required|min:5|max:255',
-            'status'       => 'in:hoat dong,khong hoat dong',
-            'images.*'     => 'max:2000|mimes:jpeg,jpg,png,gif',
-            'images'       => 'required',
+            'name' => 'required|min:3|max:255',
+            'content' => 'required|min:5',
+            'category_id' => 'notIn:Chọn danh mục',
+            'author_id' => 'notIn:Chọn tác giả',
+            'description' => 'required|min:5|max:255',
+            'status' => 'in:hoạt động,không hoạt động',
+            'images.*' => 'max:2000|mimes:jpeg,jpg,png,gif',
+            'images' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'images.*.mimes'        => ':attribute sai dinh dang',
-            'images.*.max'          => ':attribute kich thuoc khong duoc vuot qua 2MB',
-            'name.max'              => ':attribute khong duoc lon hon :max',    
-            'content.min'           => ':attribute khong duoc nho hon :min',    
-            'images.required'       => ':attribute khong duoc de trong',
-            'required'              => ':attribute khong duoc de trong',
-            'in'                    => ':attribute chua duoc chon ',
-            'not_in'                => ':attribute chua duoc chon ',
-            'min'                   => ':attribute khong duoc nho hon :min',
-            'max'                   => ':attribute khong duoc lon hon :max',
+            'images.*.mimes' => ':attribute sai định dang',
+            'images.*.max' => ':attribute kích thước không được vượt quá 2MB',
+            'name.max' => ':attribute không được lớn hơn :max',
+            'content.min' => ':attribute không được nhỏ hơn :min',
+            'images.required' => ':attribute không được để trống',
+            'required' => ':attribute không được để trống',
+            'in' => ':attribute chưa được chọn ',
+            'not_in' => ':attribute chưa được chọn ',
+            'min' => ':attribute không được nhỏ hơn :min',
+            'max' => ':attribute không được lớn hơn :max',
         ];
     }
 
@@ -60,14 +60,14 @@ class StorePostRequest extends FormRequest
     public function attributes()
     {
         return [
-            'category_id'   => 'Danh muc',
-            'images'        => 'Hinh anh',
-            'status'        => 'Trang thai',
-            'images.*'      => 'Anh',
-            'name'          => 'Ten truyen',
-            'content'       => 'Noi dung',
-            'author_id'     => 'Tac gia',
-            'description'   => 'Phan mo ta',
+            'category_id' => 'Danh mục',
+            'images' => 'Hình ảnh',
+            'status' => 'Trạng thái',
+            'images.*' => 'Ảnh',
+            'name' => 'Tên truyện',
+            'content' => 'Nội dung',
+            'author_id' => 'Tác giả',
+            'description' => 'Phần mô tả',
         ];
     }
 }

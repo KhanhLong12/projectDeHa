@@ -3,8 +3,6 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
-use App\Model\Image;
 
 class Post extends Model
 {
@@ -13,40 +11,23 @@ class Post extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Model\Category');
+        return $this->belongsTo(Category::class);
     }
 
     public function author()
     {
-        return $this->belongsTo('App\Model\Author');
+        return $this->belongsTo(Author::class);
     }
 
     public function images()
     {
-        return $this->hasMany('App\Model\Image', 'post_id');
+        return $this->hasMany(Image::class, 'post_id');
     }
 
-    public function listItems($options)
+    public function getUrlImage($images, $id)
     {
-        if ($options == 'get_all_items') 
-        {
-            $result = $this->all();
-        }
-            
-    	return $result;
-    }
-
-    public function storePost($attribute)
-    {
-        $result = $this->create($attribute);
-        return $result;
-    }
-
-    public function getUrlImage($file, $id)
-    {
-         $info_images = [];
-          if ($file->hasFile('images')) {
-            $images = $file->file('images');
+        $info_images = [];
+        if (!is_null($images)) {
             foreach ($images as $key => $image) {
                 $namefile = $image->getClientOriginalName();
                 $url = 'images/posts/' . $namefile;
@@ -58,43 +39,14 @@ class Post extends Model
                 ];
             }
         }
-        
+
         foreach ($info_images as $img) {
             $image = new Image();
             $image->name = $img['name'];
             $image->path = $img['url'];
-            $image->post_id= $id;
+            $image->post_id = $id;
             $image->save();
         }
         return $info_images;
-    }
-
-
-    public function getIdPost($id){
-        $post = $this->find($id);
-        return $post;
-    }
-
-    public function deletePost(){
-        $post = $this->delete();
-        return $post;
-    }
-
-
-    public function editPost($id){
-        $post   = $this->find($id);
-        $images = Image::where('post_id','=',$post->id)->get();
-        $data   = [$post,$images];
-        return $data;
-    }
-
-    public function updatePost($attribute){
-        $result = $this->update($attribute);
-        return $result;
-    }
-
-    public function deleteImage($idPost){
-        $image = Image::where('post_id', '=', $idPost)->delete();
-        return $image;
     }
 }

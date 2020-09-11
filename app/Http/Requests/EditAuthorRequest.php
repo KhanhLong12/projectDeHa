@@ -29,17 +29,17 @@ class EditAuthorRequest extends FormRequest
         //     $thumb  = '';
         // }
         return [
-            'name'           => 'required|min:3|max:255|unique:authors,name,'.$this->id,
-            'thumbnail'      => 'image|max:2000'
+            'name' => 'required|min:3|max:255|unique:authors,name,' . $this->id,
+            'thumbnail' => 'image|max:2000'
         ];
     }
 
     public function messages()
     {
         return [
-            'required'  => ':attribute khong duoc de trong',
-            'min'       => ':attribute khong nho hon 3 ky tu',
-            'max'       => ':attribute khong lon hon 255 ky tu',
+            'required' => ':attribute không được để trống',
+            'min' => ':attribute không được nhỏ hơn 3 ký tự',
+            'max' => ':attribute không lớn hơn 255 ký tự',
         ];
     }
 
@@ -52,7 +52,7 @@ class EditAuthorRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'      => 'Ten tac gia',
+            'name' => 'Tên tác giả',
         ];
     }
 }

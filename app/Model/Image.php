@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-   	protected $table = 'images';
+    protected $table = 'images';
 
-   	public function post()
+    public function post()
     {
-        return $this->belongsTo('App\Model\Post');
+        return $this->belongsTo(Post::class);
     }
 }

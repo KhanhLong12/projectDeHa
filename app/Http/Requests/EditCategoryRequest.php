@@ -24,18 +24,18 @@ class EditCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => 'required|min:3|max:255',
-            'display'   => 'in:co,khong',
+            'name' => 'required|min:3|max:255|unique:categories,name,' . $this->id,
+            'display' => 'in:có,không',
         ];
     }
 
     public function messages()
     {
         return [
-            'required'  => ':attribute khong duoc de trong',
-            'min'       => ':attribute khong nho hon 3 ky tu',
-            'max'       => ':attribute khong lon hon 255 ky tu',
-            'in'        => ':attribute chua duoc chon',
+            'required' => ':attribute không được để trống',
+            'min' => ':attribute không được nhỏ hơn 3 ký tự',
+            'max' => ':attribute không lớn hơn 255 ký tự',
+            'in' => ':attribute chưa được chọn',
         ];
     }
 
@@ -48,8 +48,8 @@ class EditCategoryRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'      => 'Ten danh muc',
-            'display'   => 'Hien thi danh muc',
+            'name' => 'Tên danh mục',
+            'display' => 'Hiển thị danh mục',
         ];
     }
 }

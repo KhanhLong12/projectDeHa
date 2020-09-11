@@ -2,7 +2,7 @@
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalCenterTitl-2">Thong bao</h5>
+				<h5 class="modal-title" id="exampleModalCenterTitl-2">Thông báo</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -11,11 +11,11 @@
 				<form id="formDelete" method="post" action="" enctype="multipart/form-data">
 					@csrf
 					<div class="form-group">
-						<label for="recipient-name" class="col-form-label">Ban co muon xoa truyen?</label>
+						<label for="recipient-name" class="col-form-label">Bạn có muốn xóa truyện?</label>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Dong</button>
-						<button type="button" id="delete-post" class="btn btn-danger">Chap nhan</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">đóng</button>
+						<button type="button" id="delete-post" class="btn btn-danger">Chấp nhận</button>
 					</div>
 				</form>
 			</div>

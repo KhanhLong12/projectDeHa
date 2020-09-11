@@ -25,24 +25,23 @@ class StoreCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => ['required',
-                            'min:3',
-                            'max:255',
-                            'unique:categories',
-                            new CheckEventRule()
-                             ],
-            'display'   => 'in:co,khong',
+            'name' => ['required',
+                'min:3',
+                'max:255',
+                'unique:categories',
+            ],
+            'display' => 'in:có,không',
         ];
     }
 
     public function messages()
     {
         return [
-            'required'  => ':attribute khong duoc de trong',
-            'min'       => ':attribute khong nho hon 3 ky tu',
-            'max'       => ':attribute khong lon hon 255 ky tu',
-            'in'        => ':attribute chua duoc chon',
-            'unique'    => ':attribute da ton tai',
+            'required' => ':attribute không được để trống',
+            'min' => ':attribute không được nhỏ hơn 3',
+            'max' => ':attribute không lớn hơn 255 ký tự',
+            'in' => ':attribute chưa được chọn',
+            'unique' => ':attribute đã tồn tại',
         ];
     }
 
@@ -55,8 +54,8 @@ class StoreCategoryRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'      => 'Ten danh muc',
-            'display'   => 'Hien thi danh muc',
+            'name' => 'Tên danh mục',
+            'display' => 'Hiển thị danh mục',
         ];
     }
 }

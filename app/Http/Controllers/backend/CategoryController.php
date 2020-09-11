@@ -4,140 +4,81 @@ namespace App\Http\Controllers\backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Response;
 use App\Model\Category;
-use Illuminate\Support\Facades\DB;
-use Validator;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\EditCategoryRequest;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
     protected $category;
-    public function __construct(Category $category){
 
+    public function __construct(Category $category)
+    {
         $this->category = $category;
     }
 
     public function index()
     {
-        $items           = $this->category->listItems('get_all_items');
-        $parent_category = $this->category->listItems('get_parent_name');
+        $parentCategory = $this->category->getParentCategory();
+
         return view('backend.page.category.index')->with([
-            'items'           => $items,
-            'parent_category' => $parent_category
+            'parentCategory' => $parentCategory
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreCategoryRequest $request)
-    {
-            $category = $this->category->store($request->all());
-            return response()->json([
-                'category'  => $category,
-            ], 200);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $data = Category::findOrFail($id);
-        return response()->json(['data' => $data]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(EditCategoryRequest $request, $id)
-    {
-        $category  = Category::findOrFail($id)->update($request->all());
-            return response()->json([
-                'category'  => $category,
-            ], 200);
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $category = Category::findOrFail($id);
-        $item_of_category = Category::where('parent_category', '=', $category->name)->delete();
-        $category->delete();
-        return response()->json([
-                'category'          => $category,
-                'item_of_category'  => $item_of_category,
-            ], 200);
     }
 
     public function list(Request $request)
     {
-        $items           = $this->category->all();
-        $parent_category = $this->category->listItems('get_parent_name');
-        return view('backend.page.category.list',compact('items','parent_category'));
+        $categories = $this->category->search($request->input('search'));
+        $parentCategory = $this->category->getParentCategory();
+
+        return view('backend.page.category.list', compact('categories', 'parentCategory'));
     }
 
 
-    public function fcsearch(Request $request)
+
+    public function store(StoreCategoryRequest $request)
     {
-
-        $items           = $this->category->search($request->input('search'));
-        $parent_category = $this->category->listItems('get_parent_name');
-        return view('backend.page.category.list',compact('items','parent_category'));
+        $category = $this->category->create($request->all());
+        return response()->json([
+            'category' => $category,
+        ], 200);
     }
 
-    public function getParentCategory(){
-        $parent_category = $this->category->listItems('get_parent_name');
-        return view('backend.page.category.parent_category',compact('parent_category'));
+    public function edit($id)
+    {
+        $category = $this->category->findOrFail($id);
+        return response()->json(['category' => $category]);
     }
 
-    public function getParentCategoryEdit(){
-        $parent_category = $this->category->listItems('get_parent_name');
-        return view('backend.page.category.parent_category_edit',compact('parent_category'));
+    public function update(EditCategoryRequest $request, $id)
+    {
+        $getCategory = $this->category->findOrFail($id);
+        $getCategory->update($request->all());
+
+        return response()->json([
+            'category' => $getCategory,
+        ], 200);
+
+    }
+
+    public function destroy($id)
+    {
+        $status = $this->category->destroy($id);
+        return response()->json([
+            'category' => $status,
+        ], 200);
+    }
+
+    public function getParentCategory()
+    {
+        $parentCategory = $this->category->getParentCatefory();
+        return view('backend.page.category.parent_category', compact('parentCategory'));
+    }
+
+    public function getParentCategoryEdit()
+    {
+        $parentCategory = $this->category->getParentCatefory();
+        return view('backend.page.category.parent_category_edit', compact('parentCategory'));
     }
 }

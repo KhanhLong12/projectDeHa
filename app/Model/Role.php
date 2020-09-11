@@ -8,7 +8,7 @@ use App\Model\Permission;
 
 class Role extends Model
 {
-	protected $table = 'roles';
+    protected $table = 'roles';
 
     public function users()
     {
