@@ -2,26 +2,26 @@
 	<div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 900px !important;">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalCenterTitle">Tao truyen</h5>
+				<h5 class="modal-title" id="exampleModalCenterTitle">tạo truyện</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="alert alert-danger print-error-msg" style="display:none">
+			<div class="alert alert-danger print-error-msg-edit" style="display:none">
 		        <ul></ul>
 		    </div>
 			<div class="modal-body">
 				<form id="editFormPostID" method="post" action="" enctype="multipart/form-data">
 					@csrf
 					<div class="form-group">
-						<label for="exampleInputName">Ten truyen</label>
+						<label for="exampleInputName">Tên truyện</label>
 						<input type="text" name="name" class="form-control ftname" placeholder="Nhap ten danh muc">
 					</div>
 
 					<div class="form-group">
 						<label>Danh muc</label>
 						<select class="custom-select ftCategory_id" name="category_id">
-							<option value="Chon danh muc">--Chọn danh mục--</option>
+							<option value="Chọn danh mục">--Chọn danh mục--</option>
 							@foreach($categories as $category)
 							<option value="{{ $category->id }}">{{ $category->name }}</option>
 							@endforeach
@@ -31,7 +31,7 @@
 					<div class="form-group">
 						<label>Tac gia</label>
 						<select class="custom-select ftAuthor_id" name="author_id">
-							<option value="Chon tac gia">--Chọn tac gia--</option>
+							<option value="Chon tac gia">--Chọn tác giả--</option>
 							@foreach($authors as $author)
 							<option value="{{ $author->id }}">{{ $author->name }}</option>
 							@endforeach
@@ -39,42 +39,42 @@
 					</div>
 
 					<div class="form-group">
-						<label for="exampleInputDes">Mo ta</label>
+						<label for="exampleInputDes">Mô tả</label>
 						<input type="text" name="description" class="form-control ftDescription" placeholder="Nhap mo ta">
 					</div>
 
 					<div class="form-group">
-						<label for="exampleInputDes">Noi dung</label>
+						<label for="exampleInputDes">Nội dung</label>
 						<textarea class="textarea ftContent" name="content" id="contentEdit" placeholder="Place some text here"
-						style="width: 100%; height: 500px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">abcccc</textarea>
+						style="width: 100%; height: 500px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
 					</div>
 
 					<div class="form-group">
-						<label for="exampleInputFile">Hinh anh:</label>
+						<label for="exampleInputFile">Hình ảnh:</label>
 						<div class="input-group">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" name="images[]" multiple>
-                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                <label class="custom-file-label" for="exampleInputFile">chọn file</label>
                             </div>
                         </div>
                         <br>
-                        <label for="exampleInputThumbnail"> <span style="color: #dc3545;">*</span>Anh da co:</label>
+                        <label for="exampleInputThumbnail"> <span style="color: #dc3545;">*</span>Ảnh đã có:</label>
                         <div class="thubnail form-group">
                         </div>
 					</div>
 
 					<div class="form-group">
-						<label for="exampleInputStatus">Trang thai</label>
+						<label for="exampleInputStatus">Trạng thái</label>
 						<select class="custom-select ftstatus" name="status">
-							<option selected>---Chon trang thai---</option>
-							<option value="hoat dong">hoat dong</option>
-							<option value="khong hoat dong">khong hoat dong</option>
+							<option selected>---Chọn trạng thái---</option>
+							<option value="hoạt động">hoạt động</option>
+							<option value="không hoạt động">không hoạt động</option>
 						</select>
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">huy</button>
-						<button type="button" class="btn btn-primary edit-new-post">them moi</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">hủy</button>
+						<button type="button" class="btn btn-primary update-new-post">Đồng ý</button>
 					</div>
 				</form>
 			</div>

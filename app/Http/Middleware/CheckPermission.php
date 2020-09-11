@@ -10,7 +10,7 @@ use App\Model\Role;
 use App\Model\Category;
 use App\Model\Post;
 
-class CheckRole
+class CheckPermission
 {
     /**
      * Handle an incoming request.
@@ -21,9 +21,8 @@ class CheckRole
      */
     public function handle($request, Closure $next, $permission = null)
     {
-    
         $user = Auth::user();
-        if ($user->checkPermission($permission)) {
+        if ($user->userHasPermission($permission)) {
             return $next($request);
         }
         return redirect(abort(403, 'Unauthorized action.'));

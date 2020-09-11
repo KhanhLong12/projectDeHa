@@ -10,117 +10,61 @@ use App\Http\Requests\EditAuthorRequest;
 
 class AuthorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
     protected $author;
-    public function __construct(Author $author){
 
+    public function __construct(Author $author)
+    {
         $this->author = $author;
     }
 
     public function index()
     {
-        $items = $this->author->listItems('get_all_items');
-
-        return view('backend.page.author.index')->with([
-            'items' => $items,
-        ]);
+        return view('backend.page.author.index');
     }
 
     public function list(Request $request)
     {
-        $items           = $this->author->all();
-        return view('backend.page.author.list',compact('items'));
+        $authors = $this->author->search($request->input('search'));
+        return view('backend.page.author.list', compact('authors'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreAuthorRequest $request)
     {
-        $author = $this->author->createAuthor($request->all());
-            return response()->json([
-                'author'  => $author,
-            ], 200);
+        $author = $this->author->createNew($request->all(), $request->file('thumbnail'));
+
+        return response()->json([
+            'author' => $author,
+        ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        $data = $this->author->detail($id);
-        // dd($data[1]);
-        return view('backend.page.author.detail', compact('data'));
+        $author = $this->author->with('posts')->findOrFail($id);
+        return view('backend.page.author.detail', compact('author'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $data = $this->author->editAuthor($id);
-        return response()->json(['data' => $data]);
+        $author = $this->author->findOrFail($id);
+        return response()->json(['author' => $author]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(EditAuthorRequest $request, $id)
     {
-        $author       = $this->author->editAuthor($id);
-        $updateAuthor = $author->updateAuthor($request->all());
-            return response()->json([
-                'author'        => $author,
-            ], 200);
+        $author = $this->author->findOrFail($id);
+        $author->updateAuthor($id, $request->all(), $request->file('thumbnail'));
+        return response()->json([
+            'author' => $author,
+        ], 200);
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $author = Author::findOrFail($id)->delete();
+        $status = $this->author->destroy($id);
         return response()->json([
-                'author'          => $author,
-            ], 200);
-    }
-
-    public function fcsearch(Request $request)
-    {
-
-        $items = $this->author->search($request->input('search'));
-        return view('backend.page.author.list',compact('items'));
+            'author' => $status,
+        ], 200);
     }
 }

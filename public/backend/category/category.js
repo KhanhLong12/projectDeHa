@@ -1,159 +1,144 @@
+const POST_METHOD = 'POST';
+$(document).ready(function () {
+    list()
 
- const POST_METHOD = 'POST';
- const GET_METHOD  = 'GET';
+    function getList(url) {
+        callApi(url)
+            .then((res) => {
+                $('#list').replaceWith(res);
+            })
+    }
 
-$(document).ready(function(){
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    function list() {
+        let url = $('#list').data('action')
+        getList(url)
+    }
 
     // -------createform-----------
-   $(document).on('click', '#create-new-category', function(){
-      
-        let formData       = $('#createFormID');
-        let data           = formData.serialize();
+    $(document).on('click', '#create-new-category', function () {
+        let formData = $('#createFormID');
+        let data = formData.serialize();
 
-        let url            = formData.attr('action');
-        
-      callCategoryApi(url, data,POST_METHOD)
-        .then((res)=>{
-            getList(urlList)
-            getCategory(urlCategory)
-            getCategoryEdit(urlCategoryEdit)
-            toastr.success('Them danh muc thanh cong');
-            $('#addCategory').modal('hide');
-        })
-        .catch((res)=>{
-            if (res.status == 422) {
-                printErrorMsg(res.responseJSON.errors);
-            }
-        })
+        let url = formData.attr('action');
+
+        callApi(url, data, POST_METHOD)
+            .then(() => {
+                list()
+                getCategory(urlCategory)
+                getCategoryEdit(urlCategoryEdit)
+                toastr.success('Them danh muc thanh cong');
+                $('#addCategory').modal('hide');
+            })
+            .catch((res) => {
+                if (res.status == 422) {
+                    printErrorMsg(res.responseJSON.errors);
+                }
+                if (res.status == 403) {
+                    alert('Bạn không có quyền tạo mới');
+                }
+            })
     });
-
-
-    function callCategoryApi(url,data={}, method='get')
-    {
-        return $.ajax({
-            url:url,
-            data:data,
-            method:method,
-        })
-    }
-
-    function getList(url)
-    {
-        callCategoryApi(url)
-        .then((res)=>{
-            $('#list').replaceWith(res);
-        })
-    }
-    // --------thong bao loi phan create---------
-    function printErrorMsg(msg){
-        $(".print-error-msg").find("ul").html('');
-        $(".print-error-msg").css('display','block');
-        $.each( msg, function( key, value ) {
-            $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
-        });
-    }
-
-    // --------thong bao loi phan edit---------
-    function printErrorMsgEdit(msg){
-        $(".print-error-msg-edit").find("ul").html('');
-        $(".print-error-msg-edit").css('display','block');
-        $.each( msg, function( key, value ) {
-            $(".print-error-msg-edit").find("ul").append('<li>'+value+'</li>');
-        });
-    }
 
     // -------edit category----------
     // get record
-    $(document).on('click', '.btnEdit', function(){
+    $(document).on('click', '.btnEdit', function () {
         var url = $(this).attr('href');
         var urlUpdate = $(this).attr('data-update');
-        callCategoryApi(url, null,null)
-        .then((res)=>{
-            $('.ftname').val(res.data.name);
-            $('.ftparent_category').val(res.data.parent_category);
-            $('.ftdisplay').val(res.data.display);
-            $('#editFormID').attr('action', function(i, value) {
-                return urlUpdate;
-            });
-        })
+        callApi(url, null, null)
+            .then((res) => {
+                $('.ftname').val(res.category.name);
+                $('.ftparent_category').val(res.category.parent_category);
+                $('.ftdisplay').val(res.category.display);
+                $('#editFormID').attr('action', function (i, value) {
+                    return urlUpdate;
+                });
+            })
     });
 
     // update record
-    $(document).on('click', '.edit-new-category', function(){
-        let formData       = $('#editFormID');
-        var url            = formData.attr('action');
-        let data           = formData.serialize();
+    $(document).on('click', '.update-new-category', function () {
+        let formData = $('#editFormID');
+        var url = formData.attr('action');
+        let data = formData.serialize();
 
-        callCategoryApi(url, data,POST_METHOD)
-        .then((res)=>{
-            getList(urlList)
-            getCategory(urlCategory)
-            getCategoryEdit(urlCategoryEdit)
-            toastr.success('Sua danh muc thanh cong');
-            $('#editCategory').modal('hide');
-        })
-        .catch((res)=>{
-            if (res.status == 422) {
-                printErrorMsgEdit(res.responseJSON.errors);
-            }
-        })
+        callApi(url, data, POST_METHOD)
+            .then(() => {
+                list()
+                getCategory(urlCategory)
+                getCategoryEdit(urlCategoryEdit)
+                toastr.success('Sua danh muc thanh cong');
+                $('#editCategory').modal('hide');
+            })
+            .catch((res) => {
+                if (res.status == 422) {
+                    printErrorMsg(res.responseJSON.errors);
+                }
+                if (res.status == 403) {
+                    alert('bạn không có quyền chỉnh sửa');
+                }
+            })
     });
 
 
     // ------delete record----------
-    $(document).on('click', '.btnDelete', function(){
+    $(document).on('click', '.btnDelete', function () {
         var url = $(this).attr('href');
-        $('#formDelete').attr('action', function(i, value) {
+        $('#formDelete').attr('action', function (i, value) {
             return url;
         });
     });
 
-    $(document).on('click', '#delete-category', function(){
-        let formData       = $('#formDelete');
-        var url            = formData.attr('action');
-        callCategoryApi(url, null,POST_METHOD)
-        .then((res)=>{
-            getCategoryEdit(urlCategoryEdit)
-            getList(urlList)
-            toastr.success('Xoa danh muc thanh cong');
-            $('#deleteForm').modal('hide');
-        })
+    $(document).on('click', '#delete-category', function () {
+        let formData = $('#formDelete');
+        var url = formData.attr('action');
+        callApi(url, null, POST_METHOD)
+            .then(() => {
+                getCategoryEdit(urlCategoryEdit)
+                list()
+                toastr.success('Xoa danh muc thanh cong');
+                $('#deleteForm').modal('hide');
+            })
+            .catch((res) => {
+                if (res.status == 403) {
+                    alert('ban khong co quyen xoa');
+                }
+            })
 
     });
 
 
-    $(document).ready(function() {
-       $('#search').on('keyup', function() {
-          let formData       = $('#formSearch');
-          var data           = $(this).val();
-          var url            = formData.attr('action');
-          callCategoryApi(url+'?search='+data)
-          .then((res)=>{
-            $('#list').replaceWith(res);
-        })
-      });
-   });
+    $(document).ready(function () {
+        $('#search').on('keyup', function () {
+            let formData = $('#formSearch');
+            var data = $(this).val();
+            var url = formData.attr('action');
+            callApi(url + '?search=' + data)
+                .then((res) => {
+                    $('#list').replaceWith(res);
+                })
+        });
+    });
+
+    let path = "/category/list?page=";
+    $(document).on('click', '.pagination a', function (event) {
+        event.preventDefault();
+        let page = $(this).attr('href').split('page=')[1];
+        getPageNext(path, page);
+    });
 
 
-    function getCategory(url){
-        callCategoryApi(url)
-        .then((res)=>{
-            $('#parent_category').replaceWith(res);
-        })
+    function getCategory(url) {
+        callApi(url)
+            .then((res) => {
+                $('#parent_category').replaceWith(res);
+            })
     }
 
-
-    function getCategoryEdit(url){
-        callCategoryApi(url)
-        .then((res)=>{
-            $('#parent_category_edit').replaceWith(res);
-        })
+    function getCategoryEdit(url) {
+        callApi(url)
+            .then((res) => {
+                $('#parent_category_edit').replaceWith(res);
+            })
     }
 
 

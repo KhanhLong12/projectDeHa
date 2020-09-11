@@ -14,42 +14,49 @@
 // Route::get('/', function () {
 //     return view('backend.dashboard.dashboard');
 // });
-Route::middleware(['auth'])->group(function(){
-	Route::prefix('/category')->namespace('backend')->group(function(){
-		Route::get('/index','CategoryController@index')->name('category.index')->middleware('checkRole:view-category');
-		Route::post('/store','CategoryController@store')->name('category.store')->middleware('checkRole:create-category');
-		Route::get('/list','CategoryController@list')->name('category.list');
-		Route::get('/edit/{id}','CategoryController@edit')->name('category.edit');
-		Route::post('/update/{id}','CategoryController@update')->name('category.update')->middleware('checkRole:edit-category');
-		Route::post('/delete/{id}','CategoryController@destroy')->name('category.delete')->middleware('checkRole:delete-category');
-		Route::get('/search', 'CategoryController@fcsearch')->name('category.search');
-		Route::get('/category', 'CategoryController@getParentCategory')->name('category.category');
-		Route::get('/category_edit', 'CategoryController@getParentCategoryEdit')->name('category.category_edit');
-	});
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('/category')->namespace('backend')->group(function () {
+        Route::get('/', 'CategoryController@index')->name('categories.index')->middleware('checkPermission:view-category');
+        Route::post('/store',
+            'CategoryController@store')->name('categories.store')->middleware('checkPermission:create-category');
+        Route::get('/list', 'CategoryController@list')->name('categories.list');
+        Route::get('/edit/{id}', 'CategoryController@edit')->name('categories.edit');
+        Route::post('/update/{id}',
+            'CategoryController@update')->name('categories.update')->middleware('checkPermission:edit-category');
+        Route::post('/delete/{id}',
+            'CategoryController@destroy')->name('categories.delete')->middleware('checkPermission:delete-category');
+        Route::get('/parent-category', 'CategoryController@getParentCategory')->name('categories.parent_category');
+        Route::get('/category-edit', 'CategoryController@getParentCategoryEdit')->name('categories.category_edit');
+    });
 
-	Route::prefix('/post')->namespace('backend')->group(function(){
-		Route::get('/index','PostController@index')->name('post.index');
-		Route::get('/list','PostController@list')->name('post.list');
-		Route::post('/store','PostController@store')->name('post.store');
-		Route::post('/delete/{id}','PostController@destroy')->name('post.delete');
-		Route::get('/edit/{id}','PostController@edit')->name('post.edit');
-		Route::post('/update/{id}','PostController@update')->name('post.update');
-	});
+    Route::prefix('/post')->namespace('backend')->group(function () {
+        Route::get('/', 'PostController@index')->name('posts.index')->middleware('checkPermission:view-post');
+        Route::get('/list', 'PostController@list')->name('posts.list');
+        Route::post('/store', 'PostController@store')->name('posts.store')->middleware('checkPermission:create-post');
+        Route::post('/delete/{id}', 'PostController@destroy')->name('posts.delete')->middleware('checkPermission:delete-post');
+        Route::get('/edit/{id}', 'PostController@edit')->name('posts.edit')->middleware('checkPermission:edit-post');
+        Route::post('/update/{id}', 'PostController@update')->name('posts.update');
+    });
 
-	Route::prefix('/author')->namespace('backend')->group(function(){
-		Route::get('/index','AuthorController@index')->name('author.index');
-		Route::get('/list','AuthorController@list')->name('author.list');
-		Route::post('/store','AuthorController@store')->name('author.store');
-		Route::get('/edit/{id}','AuthorController@edit')->name('author.edit');
-		Route::post('/update/{id}','AuthorController@update')->name('author.update');
-		Route::post('/delete/{id}','AuthorController@destroy')->name('author.delete');
-		Route::get('/search', 'AuthorController@fcsearch')->name('author.search');
-		Route::get('/detail/{id}', 'AuthorController@show')->name('author.detail');
-	});
+    Route::prefix('/authors')->namespace('backend')->group(function () {
+        Route::get('/', 'AuthorController@index')->name('authors.index')->middleware('checkPermission:view-author');
+        Route::get('/list', 'AuthorController@list')->name('authors.list');
+        Route::post('/store', 'AuthorController@store')->name('authors.store')->middleware('checkPermission:view-author');
+        Route::get('/{id}/edit', 'AuthorController@edit')->name('authors.edit')->middleware('checkPermission:view-author');
+        Route::post('/update/{id}', 'AuthorController@update')->name('authors.update');
+        Route::post('/delete/{id}', 'AuthorController@destroy')->name('authors.delete')->middleware('checkPermission:view-author');
+        Route::get('/detail/{id}', 'AuthorController@show')->name('authors.detail');
+    });
+
+    Route::prefix('/users')->namespace('backend')->group(function () {
+        Route::get('/', 'UserController@index')->name('users.index')->middleware('checkPermission:view-user');
+        Route::get('/list', 'UserController@list')->name('users.list');
+        Route::post('/store', 'UserController@store')->name('users.store')->middleware('checkPermission:create-post');
+        Route::get('/edit/{id}', 'UserController@edit')->name('users.edit')->middleware('checkPermission:edit-post');
+        Route::post('/update/{id}', 'UserController@update')->name('users.update');
+        Route::post('/delete/{id}', 'UserController@destroy')->name('users.delete')->middleware('checkPermission:delete-post');
+    });
 });
-
-
-
 
 
 Auth::routes();

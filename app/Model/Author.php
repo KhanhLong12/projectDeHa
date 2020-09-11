@@ -3,61 +3,60 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Model\Post;
+use Illuminate\Support\Facades\File;
 
 class Author extends Model
 {
     protected $table = 'authors';
-    protected $fillable = ['name','thumbnail'];
+    protected $fillable = ['name', 'thumbnail'];
 
     public function posts()
     {
-        return $this->hasMany('App\Model\Post','author_id');
+        return $this->hasMany(Post::class, 'author_id');
     }
 
-    public function listItems($options){
-        if ($options == 'get_all_items') {
-            $result = $this->all();
-        }
-            
-    	return $result;
-    }
 
-    public function createAuthor($attribute){
-        $thumb                    = $attribute['thumbnail'];
-        $attribute['thumbnail']   = time().'.'.$thumb->getClientOriginalExtension();
-        $destinationPath          = public_path('images/author');
-        $thumb->move($destinationPath, $attribute['thumbnail']);
+    public function createNew($attribute, $thumbnail)
+    {
+        $attribute['thumbnail'] = $this->insertImage($thumbnail);
         $result = $this->create($attribute);
         return $result;
     }
 
-    public function search($search){
-        $result = $this->where('name', 'like', '%'. $search .'%')->get();
-        return $result;
+    public function search($input)
+    {
+        return $this->when($input, function ($query) use ($input) {
+            return $query->where('name', 'like', '%' . $input . '%');
+        })->paginate(2);
     }
 
-    public function detail($id){
-        $author = $this->findOrFail($id);
-        $result = Post::where('author_id','=',$author->id)->get();
-        $data   = [$author, $result];
-        return $data;
-    }
-
-    public function editAuthor($id){
-        $author = $this->find($id);
-        return $author;
-    }
-
-    public function updateAuthor($attribute){
-        if(isset($attribute['thumbnail'])){
-            $thumb                    = $attribute['thumbnail'];
-            $attribute['thumbnail']   = time().'.'.$thumb->getClientOriginalExtension();
-            $destinationPath          = public_path('images/author');
-            $thumb->move($destinationPath, $attribute['thumbnail']);
+    public function updateThumbnail($thumbnail, $currentThumbnail)
+    {
+        if ($currentThumbnail) {
+            File::delete('images/author/' . $currentThumbnail);
         }
-        $author = $this->update($attribute);
-        return $author;
+        $currentThumbnail = $this->insertImage($thumbnail);
+        return $currentThumbnail;
+    }
+
+    public function updateAuthor($id, $attribute, $thumbnail)
+    {
+        $author = $this->find($id);
+        $attribute['thumbnail'] = $this->updateThumbnail($thumbnail, $author['thumbnail']);
+        $result = $this->update($attribute);
+        return $result;
+
+    }
+
+    public function insertImage($image)
+    {
+        $nameImage = '';
+        if ($image != null) {
+            $nameImage = time() . '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('images/author');
+            $image->move($destinationPath, $nameImage);
+        }
+        return $nameImage;
     }
 
 }

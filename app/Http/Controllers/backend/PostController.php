@@ -22,127 +22,78 @@ class PostController extends Controller
 
     protected $category;
 
-    public function __construct(Post $post, Category $category){
+    protected $author;
+
+    public function __construct(Post $post, Category $category, Author $author)
+    {
         $this->post = $post;
+
         $this->category = $category;
+
+        $this->author = $author;
     }
 
     public function index()
     {
-        $posts      = $this->post->listItems('get_all_items');
-
-        $categories = $this->category->listItems('get_all_items');
-
-        $authors    = Author::all();
+        $categories = $this->category->all();
+        $authors = $this->author->all();
 
         return view('backend.page.post.index')->with([
-            'posts'      => $posts,
             'categories' => $categories,
-            'authors'    => $authors,
+            'authors' => $authors,
         ]);
-        
+
     }
 
-    public function list(Request $request)
+    public function list()
     {
-        $posts      = $this->post->listItems('get_all_items');
-
-        $categories = $this->category->listItems('get_all_items');
-
-        $authors    = Author::all();
-
-        
-        return view('backend.page.post.list',compact('posts', 'categories', 'authors'));
+        $posts = $this->post->all();
+        return view('backend.page.post.list', compact('posts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StorePostRequest $request)
     {
-        $post = $this->post->storePost($request->all());
+        $post = $this->post->create($request->all());
 
-        $images = $this->post->getUrlImage($request,$post->id);
+        $images = $this->post->getUrlImage($request->file('images'), $post->id);
 
         return response()->json([
-            'post'  => $post,
-            'images'  => $images,
+            'post' => $post,
+            'images' => $images,
         ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $data = $this->post->editPost($id);
-        return response()->json(['data' => $data]);
+        $post = $this->post->with('images')->findOrFail($id);
+        return response()->json([
+            'post' => $post,
+        ]);
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $data       = $this->post->editPost($id);
+        $data = $this->post->findOrFail($id)->update($request->all());
 
-        $updatePost = $data[0]->updatePost($request->all());
-
-        $images     = $this->post->getUrlImage($request,$data[0]['id']);
+        $images = $this->post->getUrlImage($request->file('images'), $data['id']);
 
         return response()->json([
-            'data'  => $data,
-            'images'  => $images,
-            'updatePost'  => $updatePost,
+            'data' => $data,
+            'images' => $images,
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $post   = $this->post->getIdPost($id);
-        $image  = $this->post->deleteImage($post->id);
-        $post->deletePost();
+        $status = $this->post->destroy($id);
         return response()->json([
-                'post'  => $post,
-                'image' => $image,
-            ], 200);
+            'post' => $status,
+        ], 200);
     }
 }

@@ -2,7 +2,7 @@
 	<div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 800px !important;">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalCenterTitle">Them moi tac gia</h5>
+				<h5 class="modal-title" id="exampleModalCenterTitle">Thêm mới tác giả</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -11,10 +11,10 @@
 		        <ul></ul>
 		    </div>
 			<div class="modal-body">
-				<form id="createFormID" method="post" action="{{ route('author.store') }}" enctype="multipart/form-data">
+				<form id="createFormID" method="post" action="{{ route('authors.store') }}" enctype="multipart/form-data">
 					@csrf
 					<div class="form-group">
-						<label for="exampleInputName">Ten tac gia</label>
+						<label for="exampleInputName">Tên tác giả</label>
 						<input type="text" name="name" class="form-control" id="name" placeholder="Nhap ten tac gia">
 					</div>
 
@@ -22,13 +22,13 @@
 						<label for="exampleInputFile">Ảnh: <span style="color: #dc3545;">*</span></label>
 						<div class="custom-file">
 							<input type="file" class="custom-file-input" id="exampleInputFile" name="thumbnail" multiple>
-							<label class="custom-file-label" for="exampleInputFile">Choose file</label>
+							<label class="custom-file-label" for="exampleInputFile">chọn file</label>
 						</div>
 					</div>
 
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">huy</button>
-						<button type="button" id="create-new-author" class="btn btn-primary">them moi</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">hủy</button>
+						<button type="button" id="create-new-author" class="btn btn-primary">thêm mới</button>
 					</div>
 				</form>
 			</div>
