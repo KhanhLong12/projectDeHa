@@ -30,14 +30,14 @@ function printErrorMsg(msg) {
     });
 }
 
-function getPageNext(path, page) {
-    let url = path + page;
+$(document).on('click', '.pagination a', function (event) {
+    event.preventDefault();
+    let url = $(this).attr('href');
     callApiWithFile(url)
         .then((res) => {
             $('#list').replaceWith(res);
         })
-}
-
+});
 
 setTimeout(
     function () {

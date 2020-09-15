@@ -21,7 +21,6 @@ class CategoryController extends Controller
     public function index()
     {
         $parentCategory = $this->category->getParentCategory();
-
         return view('backend.page.category.index')->with([
             'parentCategory' => $parentCategory
         ]);
@@ -72,13 +71,13 @@ class CategoryController extends Controller
 
     public function getParentCategory()
     {
-        $parentCategory = $this->category->getParentCatefory();
+        $parentCategory = $this->category->getParentCategory();
         return view('backend.page.category.parent_category', compact('parentCategory'));
     }
 
     public function getParentCategoryEdit()
     {
-        $parentCategory = $this->category->getParentCatefory();
+        $parentCategory = $this->category->getParentCategory();
         return view('backend.page.category.parent_category_edit', compact('parentCategory'));
     }
 }

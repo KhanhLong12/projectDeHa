@@ -8,18 +8,18 @@ class Category extends Model
 {
     protected $table = 'categories';
 
-    protected $fillable = ['name', 'parent_category', 'display'];
+    protected $fillable = ['id' ,'name', 'parent_id', 'display'];
 
     public $timestamps = true;
 
     public function categoryParent()
     {
-        return $this->belongsTo(Category::class, 'parent_category');
+        return $this->belongsTo(Category::class, 'parent_id');
     }
 
     public function categoryChildrens()
     {
-        return $this->hasMany(Category::class, 'parent_category');
+        return $this->hasMany(Category::class, 'parent_id');
     }
 
     public function posts()
@@ -29,14 +29,13 @@ class Category extends Model
 
     public function getParentCategory()
     {
-        $result = $this->where('parent_category', '=', 'danh muc cha')->get('name');
-        return $result;
+        return $this->where('parent_category', 0)->get();
     }
 
-    public function search($input)
+    public function search($name)
     {
-        return $this->when($input, function ($query) use ($input) {
-            return $query->where('name', 'like', '%' . $input . '%');
+        return $this->when($name, function ($query) use ($name) {
+            return $query->where('name', 'like', '%' . $name . '%');
         })->paginate(2);
     }
 

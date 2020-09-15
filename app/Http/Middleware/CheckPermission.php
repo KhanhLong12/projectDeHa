@@ -4,11 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use App\Model\Permission;
-use App\Model\Role;
-use App\Model\Category;
-use App\Model\Post;
 
 class CheckPermission
 {

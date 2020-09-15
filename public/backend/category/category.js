@@ -20,7 +20,6 @@ $(document).ready(function () {
         let data = formData.serialize();
 
         let url = formData.attr('action');
-
         callApi(url, data, POST_METHOD)
             .then(() => {
                 list()
@@ -47,7 +46,7 @@ $(document).ready(function () {
         callApi(url, null, null)
             .then((res) => {
                 $('.ftname').val(res.category.name);
-                $('.ftparent_category').val(res.category.parent_category);
+                $('.ftparent_category').val(res.category.parent_id);
                 $('.ftdisplay').val(res.category.display);
                 $('#editFormID').attr('action', function (i, value) {
                     return urlUpdate;
@@ -60,7 +59,6 @@ $(document).ready(function () {
         let formData = $('#editFormID');
         var url = formData.attr('action');
         let data = formData.serialize();
-
         callApi(url, data, POST_METHOD)
             .then(() => {
                 list()
@@ -118,14 +116,6 @@ $(document).ready(function () {
                 })
         });
     });
-
-    let path = "/category/list?page=";
-    $(document).on('click', '.pagination a', function (event) {
-        event.preventDefault();
-        let page = $(this).attr('href').split('page=')[1];
-        getPageNext(path, page);
-    });
-
 
     function getCategory(url) {
         callApi(url)

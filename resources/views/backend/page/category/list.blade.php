@@ -15,7 +15,11 @@
                 <tr>
                     <td>{{ $value['id'] }}</td>
                     <td>{{ $value['name'] }}</td>
-                    <td>{{ $value['parent_category'] }}</td>
+                    @if($value['parent_id'] == 0)
+                        <td>danh mục cha</td>
+                    @else
+                        <td>{{$value->categoryParent['name'] }}</td>
+                    @endif
                     <td>{{ $value['display'] }}</td>
                     <td>
                         <a href="{{route('categories.edit',$value['id'])}}" class="edit btnEdit" data-toggle="modal"
