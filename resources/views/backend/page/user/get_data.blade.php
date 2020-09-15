@@ -13,7 +13,7 @@
 
         <div class="form-group">
             <label for="exampleInputEmail">Chọn quyền</label>
-            <select class="form-control select2_init" id="user_role" name="user_role[]" multiple style="width: 100%">
+            <select class="form-control select2_init" id="user_role" name="user_role[]" multiple style="width: 100%;height: 150px">
                 @foreach($roles as $item)
                     <option
                         value="{{$item->id}}" {{$userHasRole->contains('id',$item->id)?'selected':''}}>{{$item->name}}</option>
@@ -23,7 +23,7 @@
 
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">hủy</button>
-            <button type="button" class="btn btn-primary update-new-user">thêm mới</button>
+            <button type="button" class="btn btn-primary update-new-user">Đồng ý</button>
         </div>
     </form>
 </div>

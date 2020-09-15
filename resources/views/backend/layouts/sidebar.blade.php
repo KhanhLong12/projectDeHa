@@ -60,6 +60,20 @@
                     </a>
                 </nav>
             </div>
+
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages_3"
+               aria-expanded="false" aria-controls="collapsePages_1">
+                <div class="sb-nav-link-icon"><i class="fas fa-angular"></i></div>
+                Quản lý quyền
+                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="collapsePages_3" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                    <a class="nav-link collapsed" href="{{route('roles.index')}}">
+                        danh sách
+                    </a>
+                </nav>
+            </div>
         </div>
     </div>
     <div class="sb-sidenav-footer">

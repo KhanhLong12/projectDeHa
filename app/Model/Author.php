@@ -23,10 +23,10 @@ class Author extends Model
         return $result;
     }
 
-    public function search($input)
+    public function search($name)
     {
-        return $this->when($input, function ($query) use ($input) {
-            return $query->where('name', 'like', '%' . $input . '%');
+        return $this->when($name, function ($query) use ($name) {
+            return $query->where('name', 'like', '%' . $name . '%');
         })->paginate(2);
     }
 
@@ -43,8 +43,7 @@ class Author extends Model
     {
         $author = $this->find($id);
         $attribute['thumbnail'] = $this->updateThumbnail($thumbnail, $author['thumbnail']);
-        $result = $this->update($attribute);
-        return $result;
+        return $this->update($attribute);
 
     }
 
@@ -57,6 +56,11 @@ class Author extends Model
             $image->move($destinationPath, $nameImage);
         }
         return $nameImage;
+    }
+
+    public function setNameAttribute($value)
+    {
+        return $this->attributes['name'] = strtoupper($value);
     }
 
 }

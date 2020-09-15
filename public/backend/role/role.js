@@ -15,16 +15,15 @@ $(document).ready(function () {
     }
 
     // -------createform-----------
-    $(document).on('click', '#create-new-user', function () {
-
+    $(document).on('click', '#create-new-role', function () {
         let formData = $('#createFormID');
         let data = formData.serialize();
         let url = formData.attr('action');
         callApi(url, data, POST_METHOD)
             .then(() => {
-                toastr.success('Thêm user thành công');
+                toastr.success('Thêm vai trò thành công');
                 list()
-                $('#addUser').modal('hide');
+                $('#addRole').modal('hide');
             })
             .catch((res) => {
                 if (res.status == 422) {
@@ -36,13 +35,13 @@ $(document).ready(function () {
             })
     });
 
-    // -------edit user----------
-    $(document).on('click', '.btnEdit', function () {
+    // -------edit role----------
+    $(document).on('click', '.btnEditRole', function () {
         var url = $(this).attr('href');
         var urlUpdate = $(this).attr('data-update');
-        callApi(url, null, null)
+        callApi(url)
             .then((res) => {
-                $('#abc').replaceWith(res);
+                $('#listRole').replaceWith(res);
                 $('#editFormID').attr('action', function (i, value) {
                     return urlUpdate;
                 });
@@ -50,15 +49,15 @@ $(document).ready(function () {
     });
 
     // update record
-    $(document).on('click', '.update-new-user', function () {
+    $(document).on('click', '.update-new-role', function () {
         let formData = $('#editFormID');
         let url = formData.attr('action');
         let data = formData.serialize();
         callApi(url, data, POST_METHOD)
             .then(() => {
                 list()
-                toastr.success('Sửa thành công');
-                $('#editUser').modal('hide');
+                toastr.success('Sửa vai trò thành công');
+                $('#editRole').modal('hide');
             })
             .catch((res) => {
                 if (res.status == 422) {
@@ -83,7 +82,7 @@ $(document).ready(function () {
         callApi(url, null, POST_METHOD)
             .then(() => {
                 list()
-                toastr.success('Xóa thành công');
+                toastr.success('Xóa vai trò thành công');
                 $('#deleteForm').modal('hide');
             })
             .catch((res) => {

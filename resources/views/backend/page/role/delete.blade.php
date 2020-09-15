@@ -11,7 +11,7 @@
                 <form id="formDelete" method="post" action="" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Bạn có muốn xóa người dùng này</label>
+                        <label for="recipient-name" class="col-form-label">Bạn có muốn xóa vai trò này</label>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>

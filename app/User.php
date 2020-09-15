@@ -3,9 +3,9 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Model\Role;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -17,7 +17,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
@@ -26,7 +28,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -40,7 +43,7 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class,'role_user','user_id','role_id');
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
 
     public function userHasPermission($permission)
@@ -52,5 +55,20 @@ class User extends Authenticatable
             }
         }
         return false;
+    }
+
+    public function checkRole()
+    {
+        foreach ($this->roles as $role) {
+            if ($role->name == 'admin') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        return $this->attributes['password'] = Hash::make($value);
     }
 }

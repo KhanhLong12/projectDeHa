@@ -107,10 +107,4 @@ $(document).ready(function () {
         });
     });
 
-    let path = "/authors/list?page=";
-    $(document).on('click', '.pagination a', function (event) {
-        event.preventDefault();
-        let page = $(this).attr('href').split('page=')[1];
-        getPageNext(path, page);
-    });
 });

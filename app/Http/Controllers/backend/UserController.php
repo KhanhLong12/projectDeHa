@@ -5,10 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\User;
 
 use App\Model\Role;
-
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\EditUserRequest;
 
@@ -31,26 +28,15 @@ class UserController extends Controller
         return view('backend.page.user.index', compact('roles'));
     }
 
-    public function list(Request $request)
+    public function list()
     {
-        $users = $this->user->all();
+        $users = $this->user->paginate(3);
         return view('backend.page.user.list', compact('users'));
     }
 
-    public function create()
-    {
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreUserRequest $request)
     {
-        $insertUser = $request->only(['name', 'email']);
-        $insertUser['password'] = Hash::make($request->password);
+        $insertUser = $request->only(['name', 'email','password']);
         $user = $this->user->create($insertUser);
         $array_role = $request->user_role;
         $user->roles()->sync($array_role);
@@ -59,23 +45,6 @@ class UserController extends Controller
         ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $user = $this->user->findOrFail($id);
